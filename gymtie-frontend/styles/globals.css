@@ -10861,7 +10861,7 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://pixabay.com/get/g3dc83d00a81f16821b62e87cd3f040752767ac3e0731e79ec80d61da53abd877cee12f6c0fd3f14047c953a3127e4cb2d863e0fb927eb871f02ed1bc95720d87eb5fbea986006b601871083129e2d2fd_640.jpg");
+  background-image: url("/assets/images/login-bg.jpg");
   background-position: center;
   background-size: cover;
 }
