@@ -19,7 +19,7 @@ registerOwner = (req) => {
         owner.token = jwt.sign(
           {
             _id: owner._id,
-            userType: "owner",
+            userType: "Owner",
           },
           config.secret,
           {
@@ -62,7 +62,7 @@ loginOwner = (req) => {
           owner.token = jwt.sign(
             {
               _id: owner._id,
-              userType: "owner",
+              userType: "Owner",
             },
             config.secret,
             {
@@ -100,7 +100,7 @@ verifyOwner = (req) => {
     try {
       resolve({
         status: 200,
-        data: req.owner,
+        data: req.admin,
       });
     } catch (err) {
       console.log(err);

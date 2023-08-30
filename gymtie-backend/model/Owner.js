@@ -52,6 +52,7 @@ ownerSchema.statics.returnable = [
   "mobile",
   "email",
   "token",
+  "userType",
   "createdAt",
   "updatedAt",
 ];

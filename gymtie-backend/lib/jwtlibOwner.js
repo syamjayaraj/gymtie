@@ -28,33 +28,32 @@ let tokenValidation = async (req, res, next) => {
       if (!decodedToken) {
         res.status(400).json({
           status: 400,
-          message: "Token needed",
+          message: "Owner token needed",
         });
       } else if (decodedToken.expired) {
         let decoded = jwt.decode(token);
 
-        let admin = await models[decodedToken?.userType].findOne({
+        let owner = await models.Owner.findOne({
           _id: decoded._id,
         });
 
-        admin.token = jwt.sign(
+        owner.token = jwt.sign(
           {
-            _id: admin._id,
+            _id: owner._id,
           },
           config.secret,
           {
             expiresIn: "20s",
           }
         );
-        req.admin = { admin, userType: decoded.userType };
+        req.owner = { owner, userType: decoded.userType };
         next();
       } else {
-        let admin = await models[decodedToken?.userType].findOne({
+        let owner = await models.Owner.findOne({
           _id: decodedToken._id,
         });
-        admin.token = req.token;
-        admin.userType = decodedToken.userType;
-        req.admin = _.pick(admin, models[decodedToken?.userType].returnable);
+        owner.token = req.token;
+        req.owner = _.pick(owner, models.Owner.returnable);
         next();
       }
     } catch (err) {
@@ -66,9 +65,9 @@ let tokenValidation = async (req, res, next) => {
   } else {
     res.status(400).json({
       status: 400,
-      message: "Token needed",
+      message: "Owner token needed",
     });
   }
 };
 
-module.exports.jwtauth = tokenValidation;
+module.exports.jwtauthOwner = tokenValidation;

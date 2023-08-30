@@ -48,6 +48,7 @@ adminSchema.statics.returnable = [
   "_id",
   "name",
   "mobile",
+  "userType",
   "email",
   "token",
   "createdAt",

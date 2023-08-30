@@ -19,13 +19,14 @@ registerAdmin = (req) => {
         admin.token = jwt.sign(
           {
             _id: admin._id,
-            userType: "admin",
+            userType: "Admin",
           },
           config.secret,
           {
             expiresIn: "10d",
           }
         );
+        admin.userType = "Admin";
         admin = await admin.save();
         admin = _.pick(admin, models.Admin.returnable);
         resolve({
@@ -62,7 +63,7 @@ loginAdmin = (req) => {
           admin.token = jwt.sign(
             {
               _id: admin._id,
-              userType: "admin",
+              userType: "Admin",
             },
             config.secret,
             {
@@ -98,6 +99,7 @@ loginAdmin = (req) => {
 verifyAdmin = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log("hai");
       resolve({
         status: 200,
         data: req.admin,

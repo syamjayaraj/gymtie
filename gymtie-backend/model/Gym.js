@@ -10,6 +10,9 @@ let gymSchema = new Schema(
     owners: {
       type: Array,
     },
+    slug: {
+      type: String,
+    },
     about: {
       type: String,
     },

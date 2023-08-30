@@ -71,12 +71,12 @@ createNewGym = (req, res) => {
       gym = _.merge(gym, _.pick(req.body, models.Gym.fillable));
       gym.slug = generateSlug(req.body.name);
       gym.markModified("images");
+      console.log(gym.slug, "lll");
 
       gym = await gym.save();
-
       gym = await models.Gym.findOne({
         _id: gym._id,
-      }).populate("category");
+      });
 
       resolve({
         status: 200,
