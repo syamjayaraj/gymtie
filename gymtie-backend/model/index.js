@@ -1,13 +1,11 @@
-const Store = require("./Store");
+const Gym = require("./Gym");
 const Admin = require("./Admin");
-const ItemCategory = require("./ItemCategory");
-const Item = require("./Item");
-const StoreCategory = require("./StoreCategory");
+const Member = require("./Member");
+const Payment = require("./Payment");
 
 module.exports = {
   Admin,
-  StoreCategory,
-  Store,
-  ItemCategory,
-  Item,
+  Payment,
+  Gym,
+  Member,
 };

@@ -1,37 +1,21 @@
 const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
-let storeSchema = new Schema(
+let gymSchema = new Schema(
   {
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: "storecategory",
-    },
     name: {
       type: String,
       required: true,
-    },
-    slug: {
-      type: String,
-      unique: true,
     },
     orderNow: {
       type: Boolean,
       default: false,
     },
-    owner: {
-      type: String,
+    owners: {
+      type: Array,
     },
     about: {
       type: String,
-    },
-    isPureVeg: {
-      type: Boolean,
-      default: false,
-    },
-    onlineDelivery: {
-      type: Boolean,
-      default: false,
     },
     opensAt: {
       type: String,
@@ -119,16 +103,12 @@ let storeSchema = new Schema(
   { timestamps: true }
 );
 
-storeSchema.index({ location: "2dsphere" });
+gymSchema.index({ location: "2dsphere" });
 
-storeSchema.statics.fillable = [
-  "category",
+gymSchema.statics.fillable = [
   "name",
-  "owner",
+  "owners",
   "about",
-  "orderNow",
-  "isPureVeg",
-  "onlineDelivery",
   "opensAt",
   "closesAt",
   "phoneNumber",
@@ -154,16 +134,12 @@ storeSchema.statics.fillable = [
   "show",
 ];
 
-storeSchema.statics.returnable = [
+gymSchema.statics.returnable = [
   "_id",
-  "category",
   "name",
   "slug",
-  "orderNow",
-  "owner",
+  "owners",
   "about",
-  "isPureVeg",
-  "onlineDelivery",
   "opensAt",
   "closesAt",
   "phoneNumber",
@@ -189,6 +165,6 @@ storeSchema.statics.returnable = [
   "show",
 ];
 
-let Store = mongoose.model("store", storeSchema);
+let Store = mongoose.model("gym", gymSchema);
 
 module.exports = Store;

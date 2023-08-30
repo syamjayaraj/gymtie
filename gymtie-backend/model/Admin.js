@@ -18,6 +18,10 @@ let adminSchema = new Schema(
       required: true,
       unique: true,
     },
+    gym: {
+      type: Schema.Types.ObjectId,
+      ref: "gym",
+    },
     password: {
       type: String,
       required: true,
