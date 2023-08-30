@@ -2,10 +2,10 @@ let models = require("../model");
 let _ = require("lodash");
 let generateSlug = require("../lib/generateSlug");
 
-listStoreOptions = (req, res) => {
+listGymOptions = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let stores = await models.Store.find({
+      let gyms = await models.Gym.find({
         isListed: true,
       })
         .select("_id name")
@@ -13,7 +13,7 @@ listStoreOptions = (req, res) => {
 
       resolve({
         status: 200,
-        data: stores,
+        data: gyms,
       });
     } catch (err) {
       reject({
@@ -23,15 +23,15 @@ listStoreOptions = (req, res) => {
   });
 };
 
-listStoreSlugs = (req, res) => {
+listGymSlugs = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let stores = await models.Store.find({
+      let gyms = await models.Gym.find({
         isListed: true,
       }).select("slug -_id");
       resolve({
         status: 200,
-        data: stores,
+        data: gyms,
       });
     } catch (err) {
       reject({
@@ -41,11 +41,11 @@ listStoreSlugs = (req, res) => {
   });
 };
 
-listStore = (req, res) => {
+listGym = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log(req.admin);
-      let stores = await models.Store.find({
+      let gyms = await models.Gym.find({
         show: true,
         isListed: true,
       })
@@ -54,7 +54,7 @@ listStore = (req, res) => {
 
       resolve({
         status: 200,
-        data: stores,
+        data: gyms,
       });
     } catch (err) {
       reject({
@@ -64,23 +64,23 @@ listStore = (req, res) => {
   });
 };
 
-createNewStore = (req, res) => {
+createNewGym = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let store = new models.Store();
-      store = _.merge(store, _.pick(req.body, models.Store.fillable));
-      store.slug = generateSlug(req.body.name);
-      store.markModified("images");
+      let gym = new models.Gym();
+      gym = _.merge(gym, _.pick(req.body, models.Gym.fillable));
+      gym.slug = generateSlug(req.body.name);
+      gym.markModified("images");
 
-      store = await store.save();
+      gym = await gym.save();
 
-      store = await models.Store.findOne({
-        _id: store._id,
+      gym = await models.Gym.findOne({
+        _id: gym._id,
       }).populate("category");
 
       resolve({
         status: 200,
-        data: store,
+        data: gym,
       });
     } catch (err) {
       console.log(err);
@@ -91,16 +91,16 @@ createNewStore = (req, res) => {
   });
 };
 
-getStore = (req) => {
+getGym = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let store = await models.Store.findOne({
-        _id: req.params.storeId,
+      let gym = await models.Gym.findOne({
+        _id: req.params.gymId,
         isListed: true,
       });
       resolve({
         status: 200,
-        data: store,
+        data: gym,
       });
     } catch (err) {
       reject({
@@ -111,29 +111,29 @@ getStore = (req) => {
   });
 };
 
-editStore = (req, res) => {
+editGym = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let store = await models.Store.findOne({
-        _id: req.params.storeId,
+      let gym = await models.Gym.findOne({
+        _id: req.params.gymId,
         isListed: true,
       });
-      if (store) {
-        store = _.merge(store, _.pick(req.body, models.Store.fillable));
-        store.markModified("images");
-        store = await store.save();
+      if (gym) {
+        gym = _.merge(gym, _.pick(req.body, models.Gym.fillable));
+        gym.markModified("images");
+        gym = await gym.save();
 
-        store = await models.Store.findOne({
-          _id: store._id,
+        gym = await models.Gym.findOne({
+          _id: gym._id,
         }).populate("category");
 
         resolve({
           status: 200,
-          data: store,
+          data: gym,
         });
       } else {
         reject({
-          message: "No store found",
+          message: "No gym found",
         });
       }
     } catch (err) {
@@ -144,24 +144,24 @@ editStore = (req, res) => {
   });
 };
 
-deleteStore = (req, res) => {
+deleteGym = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let store = await models.Store.findOne({
-        _id: req.params.storeId,
+      let gym = await models.Gym.findOne({
+        _id: req.params.gymId,
         isListed: true,
       });
-      if (store) {
-        store.isListed = false;
-        store = await store.save();
+      if (gym) {
+        gym.isListed = false;
+        gym = await gym.save();
 
         resolve({
           status: 200,
-          message: "Store deleted",
+          message: "Gym deleted",
         });
       } else {
         reject({
-          message: "No store found",
+          message: "No gym found",
         });
       }
     } catch (err) {
@@ -172,11 +172,11 @@ deleteStore = (req, res) => {
   });
 };
 module.exports = {
-  getStore,
-  listStore,
-  listStoreOptions,
-  listStoreSlugs,
-  createNewStore,
-  editStore,
-  deleteStore,
+  getGym,
+  listGym,
+  listGymOptions,
+  listGymSlugs,
+  createNewGym,
+  editGym,
+  deleteGym,
 };

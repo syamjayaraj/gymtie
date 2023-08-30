@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const {
-  listStoreCategory,
-  addNewStoreCategory,
-  editStoreCategory,
-  deleteStoreCategory,
-  getStoreCategory,
-} = require("../controllers/storeCategoryController");
+  listPayment,
+  addNewPayment,
+  editPayment,
+  deletePayment,
+  getPayment,
+} = require("../controllers/paymentController");
 const { jwtauth } = require("../lib/jwtlib");
 
-// List all store categories
+// List all payments
 router.get("/list?", [jwtauth], async (req, res) => {
   try {
-    let response = await listStoreCategory(req);
+    let response = await listPayment(req);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -22,10 +22,10 @@ router.get("/list?", [jwtauth], async (req, res) => {
   }
 });
 
-// Add new store category
+// Add new payment
 router.post("/", [jwtauth], async (req, res) => {
   try {
-    let response = await addNewStoreCategory(req);
+    let response = await addNewPayment(req);
     res.status(200).json({
       status: 200,
       data: response,
@@ -41,7 +41,7 @@ router.post("/", [jwtauth], async (req, res) => {
 
 router.put("/:id", [jwtauth], async (req, res) => {
   try {
-    let response = await editStoreCategory(req);
+    let response = await editPayment(req);
     res.status(200).json({
       status: 200,
       data: response,
@@ -56,7 +56,7 @@ router.put("/:id", [jwtauth], async (req, res) => {
 
 router.get("/:id", [jwtauth], async (req, res) => {
   try {
-    let response = await getStoreCategory(req);
+    let response = await getPayment(req);
     res.status(200).json({
       status: 200,
       data: response,
@@ -69,9 +69,9 @@ router.get("/:id", [jwtauth], async (req, res) => {
   }
 });
 
-router.delete("/:storeCategoryId", [jwtauth], async (req, res) => {
+router.put("/:id", [jwtauth], async (req, res) => {
   try {
-    let response = await deleteStoreCategory(req);
+    let response = await deletePayment(req);
     res.status(200).json({
       status: 200,
       data: response,

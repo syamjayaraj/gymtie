@@ -7,20 +7,13 @@ let gymSchema = new Schema(
       type: String,
       required: true,
     },
-    orderNow: {
-      type: Boolean,
-      default: false,
-    },
     owners: {
       type: Array,
     },
     about: {
       type: String,
     },
-    opensAt: {
-      type: String,
-    },
-    closesAt: {
+    timing: {
       type: String,
     },
     phoneNumber: {
@@ -109,8 +102,7 @@ gymSchema.statics.fillable = [
   "name",
   "owners",
   "about",
-  "opensAt",
-  "closesAt",
+  "timing",
   "phoneNumber",
   "phoneNumber2",
   "images",
@@ -140,8 +132,7 @@ gymSchema.statics.returnable = [
   "slug",
   "owners",
   "about",
-  "opensAt",
-  "closesAt",
+  "timing",
   "phoneNumber",
   "phoneNumber2",
   "images",

@@ -28,7 +28,7 @@ let tokenValidation = async (req, res, next) => {
       if (!decodedToken) {
         res.status(400).json({
           status: 400,
-          message: "Admin does not have  token",
+          message: "Admin token needed",
         });
       } else if (decodedToken.expired) {
         let decoded = jwt.decode(token);
@@ -66,7 +66,7 @@ let tokenValidation = async (req, res, next) => {
   } else {
     res.status(400).json({
       status: 400,
-      message: "Admin does not have  token",
+      message: "Admin token needed",
     });
   }
 };

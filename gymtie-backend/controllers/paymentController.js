@@ -1,15 +1,15 @@
 let models = require("../model");
 const _ = require("lodash");
 
-listItemCategoryCustomer = (req) => {
+listPaymentCustomer = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let itemCategories = await models.Category.find({
+      let payments = await models.Category.find({
         isListed: true,
       });
       resolve({
         status: 200,
-        data: itemCategories,
+        data: payments,
       });
     } catch (err) {
       reject({
@@ -20,11 +20,11 @@ listItemCategoryCustomer = (req) => {
   });
 };
 
-listItemCategory = (req) => {
+listPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       let { limit, skip } = req.query;
-      let itemCategories = await models.ItemCategory.find({
+      let payments = await models.Payment.find({
         isListed: true,
       })
         .limit(Number(limit))
@@ -33,7 +33,7 @@ listItemCategory = (req) => {
 
       resolve({
         status: 200,
-        data: itemCategories,
+        data: payments,
       });
     } catch (err) {
       reject({
@@ -44,15 +44,15 @@ listItemCategory = (req) => {
   });
 };
 
-addNewItemCategory = (req) => {
+addNewPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let itemCategory = new models.ItemCategory(req.body);
-      itemCategory = await itemCategory.save();
+      let payment = new models.Payment(req.body);
+      payment = await payment.save();
 
       resolve({
         status: 200,
-        data: itemCategory,
+        data: payment,
       });
     } catch (err) {
       reject({
@@ -63,21 +63,18 @@ addNewItemCategory = (req) => {
   });
 };
 
-editItemCategory = (req) => {
+editPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let itemCategory = await models.ItemCategory.findOne({
+      let payment = await models.Payment.findOne({
         _id: req.params.id,
       });
-      itemCategory = _.merge(
-        itemCategory,
-        _.pick(req.body, models.ItemCategory.fillable)
-      );
-      itemCategory = await itemCategory.save();
+      payment = _.merge(payment, _.pick(req.body, models.Payment.fillable));
+      payment = await payment.save();
 
       resolve({
         status: 200,
-        data: itemCategory,
+        data: payment,
       });
     } catch (err) {
       reject({
@@ -88,13 +85,13 @@ editItemCategory = (req) => {
   });
 };
 
-getItemCategory = (req) => {
+getPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let itemCategory = await models.ItemCategory.findById(req.params.id);
+      let payment = await models.Payment.findById(req.params.id);
       resolve({
         status: 200,
-        data: itemCategory,
+        data: payment,
       });
     } catch (err) {
       reject({
@@ -105,18 +102,18 @@ getItemCategory = (req) => {
   });
 };
 
-deleteItemCategory = (req) => {
+deletePayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let itemCategory = await models.ItemCategory.findOne({
+      let payment = await models.Payment.findOne({
         _id: req.params.id,
       });
-      itemCategory.isListed = false;
-      itemCategory = await itemCategory.save();
+      payment.isListed = false;
+      payment = await payment.save();
 
       resolve({
         status: 200,
-        data: itemCategory,
+        data: payment,
       });
     } catch (err) {
       reject({
@@ -128,10 +125,10 @@ deleteItemCategory = (req) => {
 };
 
 module.exports = {
-  getItemCategory,
-  listItemCategoryCustomer,
-  listItemCategory,
-  addNewItemCategory,
-  editItemCategory,
-  deleteItemCategory,
+  getPayment,
+  listPaymentCustomer,
+  listPayment,
+  addNewPayment,
+  editPayment,
+  deletePayment,
 };

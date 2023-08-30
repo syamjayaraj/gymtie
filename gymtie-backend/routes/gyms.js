@@ -2,20 +2,20 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  createNewStore,
-  listStore,
-  listStoreOptions,
-  listStoreSlugs,
-  getStore,
-  editStore,
-  deleteStore,
-} = require("../controllers/storeController");
+  createNewGym,
+  listGym,
+  listGymOptions,
+  listGymSlugs,
+  getGym,
+  editGym,
+  deleteGym,
+} = require("../controllers/gymController");
 const { jwtauth } = require("../lib/jwtlib");
 
-// List all stores
+// List all gyms
 router.get("/list/options", [jwtauth], async (req, res) => {
   try {
-    let response = await listStoreOptions(req, res);
+    let response = await listGymOptions(req, res);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -25,10 +25,10 @@ router.get("/list/options", [jwtauth], async (req, res) => {
   }
 });
 
-// List all store slugs
+// List all gym slugs
 router.get("/list/slugs", [jwtauth], async (req, res) => {
   try {
-    let response = await listStoreSlugs(req, res);
+    let response = await listGymSlugs(req, res);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -38,10 +38,10 @@ router.get("/list/slugs", [jwtauth], async (req, res) => {
   }
 });
 
-// List all stores
+// List all gyms
 router.get("/list?", async (req, res) => {
   try {
-    let response = await listStore(req, res);
+    let response = await listGym(req, res);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -51,10 +51,10 @@ router.get("/list?", async (req, res) => {
   }
 });
 
-// Add new store
+// Add new gym
 router.post("/", [jwtauth], async (req, res) => {
   try {
-    let response = await createNewStore(req, res);
+    let response = await createNewGym(req, res);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -64,10 +64,10 @@ router.post("/", [jwtauth], async (req, res) => {
   }
 });
 
-// Get store details
-router.get("/:storeId", [jwtauth], async (req, res) => {
+// Get gym details
+router.get("/:gymId", [jwtauth], async (req, res) => {
   try {
-    let response = await getStore(req, res);
+    let response = await getGym(req, res);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -77,10 +77,10 @@ router.get("/:storeId", [jwtauth], async (req, res) => {
   }
 });
 
-//Edit store
-router.put("/:storeId", [jwtauth], async (req, res) => {
+//Edit gym
+router.put("/:gymId", [jwtauth], async (req, res) => {
   try {
-    let response = await editStore(req, res);
+    let response = await editGym(req, res);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -90,9 +90,9 @@ router.put("/:storeId", [jwtauth], async (req, res) => {
   }
 });
 
-router.delete("/:storeId", [jwtauth], async (req, res) => {
+router.delete("/:gymId", [jwtauth], async (req, res) => {
   try {
-    let response = await deleteStore(req);
+    let response = await deleteGym(req);
     res.status(200).json({
       status: 200,
       data: response,

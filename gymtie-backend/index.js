@@ -15,10 +15,10 @@ const config = require("./config")[env];
 
 const index = require("./routes");
 const admins = require("./routes/admins");
-const storeCategories = require("./routes/storeCategories");
-const stores = require("./routes/stores");
-const itemCategories = require("./routes/itemCategories");
-const items = require("./routes/items");
+const owners = require("./routes/owners");
+const gyms = require("./routes/gyms");
+const members = require("./routes/members");
+const payments = require("./routes/payments");
 
 app.use(logger("dev"));
 
@@ -40,10 +40,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/", index);
 app.use("/admins", admins);
-app.use("/store-categories", storeCategories);
-app.use("/stores", stores);
-app.use("/item-categories", itemCategories);
-app.use("/items", items);
+app.use("/owners", owners);
+app.use("/gyms", gyms);
+app.use("/members", members);
+app.use("/payments", payments);
 
 app.listen(port, function () {
   console.log("Runnning on " + port);

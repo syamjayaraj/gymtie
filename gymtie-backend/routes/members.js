@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const {
-  listItemCategory,
-  addNewItemCategory,
-  editItemCategory,
-  deleteItemCategory,
-  getItemCategory,
-} = require("../controllers/itemCategoryController");
+  listMember,
+  addNewMember,
+  editMember,
+  deleteMember,
+  getMember,
+} = require("../controllers/memberController");
 const { jwtauth } = require("../lib/jwtlib");
 
-// List all item categories
+// List all members
 router.get("/list?", [jwtauth], async (req, res) => {
   try {
-    let response = await listItemCategory(req);
+    let response = await listMember(req);
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({
@@ -22,10 +22,10 @@ router.get("/list?", [jwtauth], async (req, res) => {
   }
 });
 
-// Add new item category
+// Add new member
 router.post("/", [jwtauth], async (req, res) => {
   try {
-    let response = await addNewItemCategory(req);
+    let response = await addNewMember(req);
     res.status(200).json({
       status: 200,
       data: response,
@@ -41,7 +41,7 @@ router.post("/", [jwtauth], async (req, res) => {
 
 router.put("/:id", [jwtauth], async (req, res) => {
   try {
-    let response = await editItemCategory(req);
+    let response = await editMember(req);
     res.status(200).json({
       status: 200,
       data: response,
@@ -56,7 +56,7 @@ router.put("/:id", [jwtauth], async (req, res) => {
 
 router.get("/:id", [jwtauth], async (req, res) => {
   try {
-    let response = await getItemCategory(req);
+    let response = await getMember(req);
     res.status(200).json({
       status: 200,
       data: response,
@@ -71,7 +71,7 @@ router.get("/:id", [jwtauth], async (req, res) => {
 
 router.put("/:id", [jwtauth], async (req, res) => {
   try {
-    let response = await deleteItemCategory(req);
+    let response = await deleteMember(req);
     res.status(200).json({
       status: 200,
       data: response,

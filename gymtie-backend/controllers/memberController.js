@@ -1,15 +1,15 @@
 let models = require("../model");
 const _ = require("lodash");
 
-listStoreCategoryCustomer = (req) => {
+listMemberCustomer = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let storeCategories = await models.Category.find({
+      let members = await models.Category.find({
         isListed: true,
       });
       resolve({
         status: 200,
-        data: storeCategories,
+        data: members,
       });
     } catch (err) {
       reject({
@@ -20,11 +20,11 @@ listStoreCategoryCustomer = (req) => {
   });
 };
 
-listStoreCategory = (req) => {
+listMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       let { limit, skip } = req.query;
-      let storeCategories = await models.StoreCategory.find({
+      let members = await models.Member.find({
         isListed: true,
       })
         .limit(Number(limit))
@@ -33,7 +33,7 @@ listStoreCategory = (req) => {
 
       resolve({
         status: 200,
-        data: storeCategories,
+        data: members,
       });
     } catch (err) {
       reject({
@@ -44,16 +44,16 @@ listStoreCategory = (req) => {
   });
 };
 
-addNewStoreCategory = (req) => {
+addNewMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log(req.body, "lorem");
-      let storeCategory = new models.StoreCategory(req.body);
-      storeCategory = await storeCategory.save();
+      let member = new models.Member(req.body);
+      member = await member.save();
 
       resolve({
         status: 200,
-        data: storeCategory,
+        data: member,
       });
     } catch (err) {
       reject({
@@ -64,24 +64,21 @@ addNewStoreCategory = (req) => {
   });
 };
 
-editStoreCategory = (req) => {
+editMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let storeCategory = await models.StoreCategory.findOne({
+      let member = await models.Member.findOne({
         _id: req.params.id,
       });
-      storeCategory = _.merge(
-        storeCategory,
-        _.pick(req.body, models.StoreCategory.fillable)
-      );
-      storeCategory = await storeCategory.save();
-      storeCategory = await models.StoreCategory.findOne({
-        _id: storeCategory._id,
+      member = _.merge(member, _.pick(req.body, models.Member.fillable));
+      member = await member.save();
+      member = await models.Member.findOne({
+        _id: member._id,
       });
 
       resolve({
         status: 200,
-        data: storeCategory,
+        data: member,
       });
     } catch (err) {
       reject({
@@ -92,13 +89,13 @@ editStoreCategory = (req) => {
   });
 };
 
-getStoreCategory = (req) => {
+getMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let storeCategory = await models.StoreCategory.findById(req.params.id);
+      let member = await models.Member.findById(req.params.id);
       resolve({
         status: 200,
-        data: storeCategory,
+        data: member,
       });
     } catch (err) {
       reject({
@@ -109,16 +106,16 @@ getStoreCategory = (req) => {
   });
 };
 
-deleteStoreCategory = (req) => {
+deleteMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let storeCategory = await models.StoreCategory.findOne({
-        _id: req.params.storeCategoryId,
+      let member = await models.Member.findOne({
+        _id: req.params.memberId,
         isListed: true,
       });
-      if (storeCategory) {
-        storeCategory.isListed = false;
-        storeCategory = await storeCategory.save();
+      if (member) {
+        member.isListed = false;
+        member = await member.save();
         resolve({
           status: 200,
           message: "Store category deleted",
@@ -139,10 +136,10 @@ deleteStoreCategory = (req) => {
 };
 
 module.exports = {
-  getStoreCategory,
-  listStoreCategoryCustomer,
-  listStoreCategory,
-  addNewStoreCategory,
-  editStoreCategory,
-  deleteStoreCategory,
+  getMember,
+  listMemberCustomer,
+  listMember,
+  addNewMember,
+  editMember,
+  deleteMember,
 };
