@@ -47,7 +47,6 @@ listMember = (req) => {
 addNewMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(req.body, "lorem");
       let member = new models.Member(req.body);
       member = await member.save();
 

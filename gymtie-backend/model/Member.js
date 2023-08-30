@@ -47,10 +47,6 @@ let memberSchema = new Schema(
     images: {
       type: Array,
     },
-    show: {
-      type: Boolean,
-      default: true,
-    },
     isListed: {
       type: Boolean,
       default: true,
@@ -62,25 +58,37 @@ let memberSchema = new Schema(
 memberSchema.statics.returnable = [
   "_id",
   "gym",
-  "slug",
   "name",
+  "joiningDate",
   "about",
-  "category",
-  "prices",
+  "address",
+  "city",
+  "state",
+  "country",
+  "pincode",
+  "landmark",
+  "phoneNumber",
+  "phoneNumber2",
+  "email",
   "images",
-  "isVeg",
   "isListed",
 ];
 
 memberSchema.statics.fillable = [
   "gym",
   "name",
+  "joiningDate",
   "about",
-  "category",
-  "prices",
+  "address",
+  "city",
+  "state",
+  "country",
+  "pincode",
+  "landmark",
+  "phoneNumber",
+  "phoneNumber2",
+  "email",
   "images",
-  "isVeg",
-  "show",
 ];
 
 let Member = mongoose.model("member", memberSchema);
