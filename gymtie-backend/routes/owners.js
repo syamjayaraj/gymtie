@@ -21,6 +21,7 @@ router.post("/register", [jwtauth], async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
+    console.log(req.body);
     let response = await loginOwner(req);
     res.status(200).json(response);
   } catch (err) {

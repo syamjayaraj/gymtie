@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
+import { Formik } from 'formik';
 
 export default function Login() {
   const [postsState, setPostsState] = useState([]);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  let submitForm = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    let res = await fetch("http://localhost:3000/api/user", {
+  const submitForm = async (values, setSubmitting) => {
+    setSubmitting(true);
+    let res = await fetch("http://localhost:3026/owners/login", {
+      headers: {
+        "Content-Type": "application/json"
+      },
       method: "POST",
       body: JSON.stringify({
-        title: title,
-        content: content,
+        email: values?.email,
+        password: values?.password,
       }),
     });
     res = await res.json();
-    setLoading(false);
+    setSubmitting(false);
     console.log(res, "res")
   };
 
@@ -39,20 +39,87 @@ export default function Login() {
                     <div className="text-center">
                       <h1 className="h4 text-gray-900 mb-4">LOGIN</h1>
                     </div>
-                    <form className="user" onSubmit={submitForm}>
-                      <div className="form-group">
-                        <input type="email" className="form-control form-control-user"
-                          id="exampleInputEmail" aria-describedby="emailHelp"
-                          placeholder="Enter Email Address" />
-                      </div>
-                      <div className="form-group">
-                        <input type="password" className="form-control form-control-user"
-                          id="exampleInputPassword" placeholder="Password" />
-                      </div>
-                      <button className="btn btn-primary btn-user btn-block" type="submit" disabled={loading ? true : false}>
-                        {loading ? "Logging In" : "Login"}
-                      </button>
-                    </form>
+
+
+                    <Formik
+                      initialValues={{ email: '', password: '' }}
+                      validate={values => {
+                        const errors = {
+                          // email: "",
+                          // password: ""
+                        };
+                        if (!values.email) {
+                          errors.email = 'Required';
+                        }
+                        else if (
+                          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                        ) {
+                          errors.email = 'Invalid email address';
+                        }
+                        if (!values.password) {
+                          errors.password = 'Required';
+                        }
+                        return errors;
+                      }}
+
+                      onSubmit={(values, { setSubmitting }) => {
+                        submitForm(values, setSubmitting)
+                      }}
+                    >
+                      {({
+                        values,
+                        errors,
+                        touched,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isSubmitting,
+                        /* and other goodies */
+                      }) => (
+
+
+                        <form
+                          className="user"
+                          onSubmit={handleSubmit}
+                        >
+                          <div className="form-group">
+
+                            <input
+                              className="form-control form-control-user"
+                              type="email"
+                              name="email"
+                              placeholder="Email Address"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.email}
+                            />
+                            {errors.email && touched.email && errors.email}
+                          </div>
+                          <div className="form-group">
+
+                            <input
+                              className="form-control form-control-user"
+                              type="password"
+                              name="password"
+                              placeholder="Password"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                            />
+                            {errors.password && touched.password && errors.password}
+                          </div>
+                          <div className="form-group">
+
+                            <button
+                              className="btn btn-primary btn-user btn-block"
+                              type="submit"
+                              disabled={isSubmitting}>
+                              Submit
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                    </Formik>
                   </div>
                 </div>
               </div>
