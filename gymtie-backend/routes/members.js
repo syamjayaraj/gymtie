@@ -69,7 +69,7 @@ router.get("/:id", [jwtauth], async (req, res) => {
   }
 });
 
-router.put("/:id", [jwtauth], async (req, res) => {
+router.delete("/:id", [jwtauth], async (req, res) => {
   try {
     let response = await deleteMember(req);
     res.status(200).json({

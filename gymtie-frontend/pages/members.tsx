@@ -1,10 +1,118 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
+import { deleteMember, listMembers } from "../services/member"
+import { confirmAlert } from 'react-confirm-alert';
+import MemberForm from "../components/member-form";
 
 export default function users() {
+
+    const [showAddMemberModal, setShowAddMemberModal] = useState(false)
+    const [membersForRender, setMembersForRender] = useState([])
+
+    const [members, setMembers] = useState([])
+
+    const handleAddMemberModal = () => {
+        setShowAddMemberModal(true)
+    }
+
+    const handleDeleteMember = async (memberId) => {
+        const res = await deleteMember(memberId)
+        if (res?.status === 200) {
+            var memberIndex = members.findIndex(function (o) {
+                return o._id === memberId;
+            });
+            if (memberIndex !== -1) {
+                setMembers(members.filter((item) => item._id != memberId));
+            }
+        }
+    }
+
+    useEffect(() => {
+        const handleListMembers = async () => {
+            const res = await listMembers()
+            if (res?.status === 200) {
+                setMembers(res?.data)
+            } else {
+
+            }
+        }
+        handleListMembers()
+    }, [])
+
+    useEffect(() => {
+        let membersArray = JSON.parse(JSON.stringify(members));
+        let membersData = [];
+        membersArray.map((item, index) => {
+            item.id = (
+                <div style={{ fontWeight: "bold", fontSize: "1.2em" }}>{item._id}</div>
+            );
+            item.action = (
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div
+                        className="uil-trash-alt"
+                        style={{
+                            cursor: "pointer",
+                            color: "#938af3",
+                            fontSize: ".7em",
+                            marginRight: ".5rem"
+                        }}
+                        onClick={() =>
+                            confirmAlert({
+                                title: '',
+                                message: 'Are you sure you want to delete this member?',
+                                closeOnEscape: true,
+                                closeOnClickOutside: true,
+                                buttons: [
+                                    {
+                                        label: 'Yes',
+                                        onClick: () =>
+                                            handleDeleteMember(members[index]._id)
+                                    },
+                                    {
+                                        label: 'No',
+                                        onClick: () => { }
+                                    }
+                                ]
+                            })}>
+                        Edit
+                    </div>
+                    <div
+                        className="uil-trash-alt"
+                        style={{
+                            cursor: "pointer",
+                            color: "#fb6262",
+                            fontSize: ".7em",
+
+                        }}
+                        onClick={() =>
+                            confirmAlert({
+                                title: '',
+                                message: 'Are you sure you want to delete this member?',
+                                closeOnEscape: true,
+                                closeOnClickOutside: true,
+                                buttons: [
+                                    {
+                                        label: 'Yes',
+                                        onClick: () =>
+                                            handleDeleteMember(members[index]._id)
+                                    },
+                                    {
+                                        label: 'No',
+                                        onClick: () => { }
+                                    }
+                                ]
+                            })}>
+                        Delete
+                    </div>
+                </div>
+            );
+            membersData.push(item);
+        });
+        setMembersForRender(membersData);
+    }, [members]);
 
     const data = {
         columns: [
@@ -18,22 +126,52 @@ export default function users() {
                 label: "Phone Number",
                 field: "phoneNumber",
                 sort: "asc",
-                width: 270
+                width: 100
+            },
+            {
+                label: "Email",
+                field: "email",
+                sort: "asc",
+                width: 100
             },
             {
                 label: "Age",
                 field: "age",
                 sort: "asc",
-                width: 200
+                width: 50
             },
             {
                 label: "Address",
                 field: "address",
                 sort: "asc",
+                width: 250
+            },
+            {
+                label: "City",
+                field: "city",
+                sort: "asc",
                 width: 100
             },
             {
-                label: "Start date",
+                label: "State",
+                field: "state",
+                sort: "asc",
+                width: 100
+            },
+            {
+                label: "Country",
+                field: "country",
+                sort: "asc",
+                width: 100
+            },
+            {
+                label: "PIN Code",
+                field: "pincode",
+                sort: "asc",
+                width: 100
+            },
+            {
+                label: "Joining date",
                 field: "startDate",
                 sort: "asc",
                 width: 150
@@ -43,331 +181,14 @@ export default function users() {
                 field: "paymentStatus",
                 sort: "asc",
                 width: 100
-            }
+            },
+            {
+                label: "Action",
+                field: "action",
+                width: 100,
+            },
         ],
-        rows: [
-            {
-                name: "Tiger Nixon",
-                position: "System Architect",
-                office: "Edinburgh",
-                age: "61",
-                date: "2011/04/25",
-                salary: "$320"
-            },
-            {
-                name: "Garrett Winters",
-                position: "Accountant",
-                office: "Tokyo",
-                age: "63",
-                date: "2011/07/25",
-                salary: "$170"
-            },
-            {
-                name: "Ashton Cox",
-                position: "Junior Technical Author",
-                office: "San Francisco",
-                age: "66",
-                date: "2009/01/12",
-                salary: "$86"
-            },
-            {
-                name: "Cedric Kelly",
-                position: "Senior Javascript Developer",
-                office: "Edinburgh",
-                age: "22",
-                date: "2012/03/29",
-                salary: "$433"
-            },
-            {
-                name: "Airi Satou",
-                position: "Accountant",
-                office: "Tokyo",
-                age: "33",
-                date: "2008/11/28",
-                salary: "$162"
-            },
-            {
-                name: "Brielle Williamson",
-                position: "Integration Specialist",
-                office: "New York",
-                age: "61",
-                date: "2012/12/02",
-                salary: "$372"
-            },
-            {
-                name: "Herrod Chandler",
-                position: "Sales Assistant",
-                office: "San Francisco",
-                age: "59",
-                date: "2012/08/06",
-                salary: "$137"
-            },
-            {
-                name: "Rhona Davidson",
-                position: "Integration Specialist",
-                office: "Tokyo",
-                age: "55",
-                date: "2010/10/14",
-                salary: "$327"
-            },
-            {
-                name: "Colleen Hurst",
-                position: "Javascript Developer",
-                office: "San Francisco",
-                age: "39",
-                date: "2009/09/15",
-                salary: "$205"
-            },
-            {
-                name: "Sonya Frost",
-                position: "Software Engineer",
-                office: "Edinburgh",
-                age: "23",
-                date: "2008/12/13",
-                salary: "$103"
-            },
-            {
-                name: "Jena Gaines",
-                position: "Office Manager",
-                office: "London",
-                age: "30",
-                date: "2008/12/19",
-                salary: "$90"
-            },
-            {
-                name: "Quinn Flynn",
-                position: "Support Lead",
-                office: "Edinburgh",
-                age: "22",
-                date: "2013/03/03",
-                salary: "$342"
-            },
-            {
-                name: "Charde Marshall",
-                position: "Regional Director",
-                office: "San Francisco",
-                age: "36",
-                date: "2008/10/16",
-                salary: "$470"
-            },
-            {
-                name: "Haley Kennedy",
-                position: "Senior Marketing Designer",
-                office: "London",
-                age: "43",
-                date: "2012/12/18",
-                salary: "$313"
-            },
-            {
-                name: "Tatyana Fitzpatrick",
-                position: "Regional Director",
-                office: "London",
-                age: "19",
-                date: "2010/03/17",
-                salary: "$385"
-            },
-            {
-                name: "Michael Silva",
-                position: "Marketing Designer",
-                office: "London",
-                age: "66",
-                date: "2012/11/27",
-                salary: "$198"
-            },
-            {
-                name: "Paul Byrd",
-                position: "Chief Financial Officer (CFO)",
-                office: "New York",
-                age: "64",
-                date: "2010/06/09",
-                salary: "$725"
-            },
-            {
-                name: "Gloria Little",
-                position: "Systems Administrator",
-                office: "New York",
-                age: "59",
-                date: "2009/04/10",
-                salary: "$237"
-            },
-            {
-                name: "Bradley Greer",
-                position: "Software Engineer",
-                office: "London",
-                age: "41",
-                date: "2012/10/13",
-                salary: "$132"
-            },
-            {
-                name: "Dai Rios",
-                position: "Personnel Lead",
-                office: "Edinburgh",
-                age: "35",
-                date: "2012/09/26",
-                salary: "$217"
-            },
-            {
-                name: "Jenette Caldwell",
-                position: "Development Lead",
-                office: "New York",
-                age: "30",
-                date: "2011/09/03",
-                salary: "$345"
-            },
-            {
-                name: "Yuri Berry",
-                position: "Chief Marketing Officer (CMO)",
-                office: "New York",
-                age: "40",
-                date: "2009/06/25",
-                salary: "$675"
-            },
-            {
-                name: "Caesar Vance",
-                position: "Pre-Sales Support",
-                office: "New York",
-                age: "21",
-                date: "2011/12/12",
-                salary: "$106"
-            },
-            {
-                name: "Doris Wilder",
-                position: "Sales Assistant",
-                office: "Sidney",
-                age: "23",
-                date: "2010/09/20",
-                salary: "$85"
-            },
-            {
-                name: "Angelica Ramos",
-                position: "Chief Executive Officer (CEO)",
-                office: "London",
-                age: "47",
-                date: "2009/10/09",
-                salary: "$1"
-            },
-            {
-                name: "Gavin Joyce",
-                position: "Developer",
-                office: "Edinburgh",
-                age: "42",
-                date: "2010/12/22",
-                salary: "$92"
-            },
-            {
-                name: "Jennifer Chang",
-                position: "Regional Director",
-                office: "Singapore",
-                age: "28",
-                date: "2010/11/14",
-                salary: "$357"
-            },
-            {
-                name: "Brenden Wagner",
-                position: "Software Engineer",
-                office: "San Francisco",
-                age: "28",
-                date: "2011/06/07",
-                salary: "$206"
-            },
-            {
-                name: "Fiona Green",
-                position: "Chief Operating Officer (COO)",
-                office: "San Francisco",
-                age: "48",
-                date: "2010/03/11",
-                salary: "$850"
-            },
-            {
-                name: "Shou Itou",
-                position: "Regional Marketing",
-                office: "Tokyo",
-                age: "20",
-                date: "2011/08/14",
-                salary: "$163"
-            },
-            {
-                name: "Michelle House",
-                position: "Integration Specialist",
-                office: "Sidney",
-                age: "37",
-                date: "2011/06/02",
-                salary: "$95"
-            },
-            {
-                name: "Suki Burks",
-                position: "Developer",
-                office: "London",
-                age: "53",
-                date: "2009/10/22",
-                salary: "$114"
-            },
-            {
-                name: "Prescott Bartlett",
-                position: "Technical Author",
-                office: "London",
-                age: "27",
-                date: "2011/05/07",
-                salary: "$145"
-            },
-            {
-                name: "Gavin Cortez",
-                position: "Team Leader",
-                office: "San Francisco",
-                age: "22",
-                date: "2008/10/26",
-                salary: "$235"
-            },
-
-            {
-                name: "Hermione Butler",
-                position: "Regional Director",
-                office: "London",
-                age: "47",
-                date: "2011/03/21",
-                salary: "$356"
-            },
-            {
-                name: "Lael Greer",
-                position: "Systems Administrator",
-                office: "London",
-                age: "21",
-                date: "2009/02/27",
-                salary: "$103"
-            },
-            {
-                name: "Jonas Alexander",
-                position: "Developer",
-                office: "San Francisco",
-                age: "30",
-                date: "2010/07/14",
-                salary: "$86"
-            },
-            {
-                name: "Shad Decker",
-                position: "Regional Director",
-                office: "Edinburgh",
-                age: "51",
-                date: "2008/11/13",
-                salary: "$183"
-            },
-            {
-                name: "Michael Bruce",
-                position: "Javascript Developer",
-                office: "Singapore",
-                age: "29",
-                date: "2011/06/27",
-                salary: "$183"
-            },
-            {
-                name: "Donna Snider",
-                position: "Customer Support",
-                office: "New York",
-                age: "27",
-                date: "2011/01/25",
-                salary: "$112"
-            }
-        ]
+        rows: membersForRender
     };
 
 
@@ -377,6 +198,7 @@ export default function users() {
             <div id="wrapper">
                 {/* <!-- Sidebar --> */}
                 <Sidebar />
+                <MemberForm />
 
                 {/* <!-- Content Wrapper --> */}
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -393,7 +215,24 @@ export default function users() {
                         <div className="container-fluid">
 
                             {/* <!-- Page Heading --> */}
-                            <h1 className="h3 mb-2 text-gray-800">Members</h1>
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center"
+                            }}>
+                                <h1 className="h3 mb-2 text-gray-800">Members</h1>
+                                <div className="">
+                                    <button type="button" className="btn btn-secondary btn-lg" style={{
+                                        alignItems: "center",
+                                        alignContent: "center",
+                                        display: "flex",
+                                        padding: "0rem 3rem",
+                                        fontSize: "1.1rem"
+                                    }}
+                                        onClick={handleAddMemberModal}
+                                    >Add</button>
+                                </div>
+                            </div>
 
                             {/* <!-- DataTales Example --> */}
                             <div className="card shadow mb-4">
@@ -402,7 +241,7 @@ export default function users() {
                                         <MDBDataTable
                                             striped bordered hover data={data}
                                             paging={false}
-                                            ta
+                                            noBottomColumns={true}
                                         />
                                     </div>
                                 </div>
@@ -420,7 +259,7 @@ export default function users() {
 
                 </div>
                 {/* <!-- End of Content Wrapper --> */}
-            </div>
+            </div >
         </>
     )
 }

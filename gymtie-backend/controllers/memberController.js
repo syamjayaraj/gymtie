@@ -109,7 +109,7 @@ deleteMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       let member = await models.Member.findOne({
-        _id: req.params.memberId,
+        _id: req.params.id,
         isListed: true,
       });
       if (member) {
@@ -117,12 +117,12 @@ deleteMember = (req) => {
         member = await member.save();
         resolve({
           status: 200,
-          message: "Store category deleted",
+          message: "Member deleted",
         });
       } else {
         reject({
           status: 200,
-          message: "No Store category found",
+          message: "No Member found",
         });
       }
     } catch (err) {
