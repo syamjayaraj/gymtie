@@ -10,16 +10,19 @@ import Link from "next/link";
 export default function Dashboard() {
     const router = useRouter()
 
+
+    let userToken = undefined
     if (typeof window !== 'undefined') {
-        const userToken = localStorage.getItem('userToken');
-        useEffect(() => {
-            if (userToken) {
-            }
-            else {
-                router?.push("/login")
-            }
-        }, [userToken]);
+        userToken = localStorage.getItem('userToken');
     }
+
+    useEffect(() => {
+        if (userToken) {
+        }
+        else {
+            router?.push("/login")
+        }
+    }, [userToken]);
 
 
     return (

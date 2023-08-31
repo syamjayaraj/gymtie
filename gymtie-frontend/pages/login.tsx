@@ -7,17 +7,18 @@ import { submitLoginForm } from "../services/ownerApi";
 export default function Login() {
   const router = useRouter()
 
+  let userToken = undefined
   if (typeof window !== 'undefined') {
-    const userToken = localStorage.getItem('userToken');
-
-    useEffect(() => {
-      if (userToken) {
-        router?.push("/")
-      }
-      else {
-      }
-    }, [userToken]);
+    userToken = localStorage.getItem('userToken');
   }
+
+  useEffect(() => {
+    if (userToken) {
+      router?.push("/")
+    }
+    else {
+    }
+  }, [userToken]);
 
 
   const submitForm = async (values, setSubmitting) => {
