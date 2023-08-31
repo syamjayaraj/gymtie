@@ -4,13 +4,12 @@ import { useRouter } from "next/router";
 export default function Sidebar() {
 
     const router = useRouter()
-    console.log(router, "router")
     const path = router?.asPath
 
     return (
         <>
             {/*<-- Sidebar -->*/}
-            <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul className="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 {/*<-- Sidebar - Brand -->*/}
                 <Link href="/dashboard" className="sidebar-brand d-flex align-items-center justify-content-center">
@@ -24,8 +23,8 @@ export default function Sidebar() {
                 <hr className="sidebar-divider my-0" />
 
                 {/*<-- Nav Item - Dashboard -->*/}
-                <li className={`nav-item ${path === "/dashboard" ? "active" : ""}`}>
-                    <Link href="/dashboard" className="nav-link">
+                <li className={`nav-item ${path === "/" ? "active" : ""}`}>
+                    <Link href="/" className="nav-link">
                         <i className="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></Link>
                 </li>
@@ -37,10 +36,18 @@ export default function Sidebar() {
                     Addons
                 </div> */}
 
+                {/*<-- Nav Item - Tables -->*/}
+                <li className={`nav-item ${path === "/payments" ? "active" : ""}`}>
+                    <Link href="/payments" className="nav-link">
+                        <i className="fas fa-fw fa-table"></i>
+                        <span>Payments</span>
+                    </Link>
+                </li>
+
 
                 {/*<-- Nav Item - Tables -->*/}
                 <li className={`nav-item ${path === "/users" ? "active" : ""}`}>
-                    <Link href="/users" className="nav-link">
+                    <Link href="/members" className="nav-link">
                         <i className="fas fa-fw fa-table"></i>
                         <span>Members</span>
                     </Link>

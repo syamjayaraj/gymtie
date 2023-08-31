@@ -25,7 +25,7 @@ export default function users() {
                         <div className="container-fluid">
 
                             {/* <!-- Page Heading --> */}
-                            <h1 className="h3 mb-2 text-gray-800">Users</h1>
+                            <h1 className="h3 mb-2 text-gray-800">Payments</h1>
 
                             {/* <!-- DataTales Example --> */}
                             <div className="card shadow mb-4">

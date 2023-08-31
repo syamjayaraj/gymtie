@@ -1,8 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Formik } from 'formik';
+import { useRouter } from "next/router";
+import AppContext from "../AppContext";
 
 export default function Login() {
-  const [postsState, setPostsState] = useState([]);
+
+  const value = useContext(AppContext);
+  let { userData } = value?.state;
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (userData !== "") {
+      if (userData?.token) {
+      }
+      else {
+        router?.push("/")
+      }
+    }
+  }, [userData]);
+
 
   const submitForm = async (values, setSubmitting) => {
     setSubmitting(true);
@@ -17,8 +34,12 @@ export default function Login() {
       }),
     });
     res = await res.json();
+    if (res?.status === 200) {
+      localStorage.setItem("userToken", res?.data?.token)
+      localStorage.setItem("userData", JSON.stringify(res?.data));
+      router?.push("/")
+    }
     setSubmitting(false);
-    console.log(res, "res")
   };
 
 
@@ -44,7 +65,7 @@ export default function Login() {
                     <Formik
                       initialValues={{ email: '', password: '' }}
                       validate={values => {
-                        const errors = {
+                        const errors: any = {
                           // email: "",
                           // password: ""
                         };

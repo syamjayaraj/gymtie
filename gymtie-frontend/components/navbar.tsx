@@ -1,27 +1,24 @@
+import { useContext, useState } from "react";
+import AppContext from "../AppContext";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 export default function Navbar() {
+    const router = useRouter()
+    const value = useContext(AppContext);
+    let { userData } = value?.state;
+
+    const [showMenu, setShowMenu] = useState(false)
+
+    const logout = () => {
+        localStorage?.removeItem("userData")
+        localStorage?.removeItem("userToken")
+        router?.push("/login")
+    }
+
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-            {/* <!-- Sidebar Toggle (Topbar) --> */}
-            <form className="form-inline">
-                <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
-                    <i className="fa fa-bars"></i>
-                </button>
-            </form>
-
-            {/* <!-- Topbar Search --> */}
-            <form
-                className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div className="input-group">
-                    <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..."
-                        aria-label="Search" aria-describedby="basic-addon2" />
-                    <div className="input-group-append">
-                        <button className="btn btn-primary" type="button">
-                            <i className="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             {/* <!-- Topbar Navbar --> */}
             <ul className="navbar-nav ml-auto">
@@ -54,32 +51,31 @@ export default function Navbar() {
 
                 {/* <!-- Nav Item - User Information --> */}
                 <li className="nav-item dropdown no-arrow">
-                    <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span className="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                    <div className="nav-link dropdown-toggle" id="userDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        onClick={() => setShowMenu(!showMenu)}
+                    >
+                        <span className="mr-2 d-none d-lg-inline text-gray-600 small">{userData?.name}</span>
                         <img className="img-profile rounded-circle"
-                            src="img/undraw_profile.svg" />
-                    </a>
+                            src="/assets/images/user.png" />
+                    </div>
                     {/* <!-- Dropdown - User Information --> */}
-                    <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    <div
+                        className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        style={{
+                            display: showMenu ? "block" : "none"
+                        }}
                         aria-labelledby="userDropdown">
-                        <a className="dropdown-item" href="#">
+                        {/* <Link className="dropdown-item" href="/profile">
                             <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
-                        </a>
-                        <a className="dropdown-item" href="#">
-                            <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Settings
-                        </a>
-                        <a className="dropdown-item" href="#">
-                            <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Activity Log
-                        </a>
-                        <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        </Link>
+                        <div className="dropdown-divider"></div> */}
+                        <div className="dropdown-item cursor-pointer" data-toggle="modal" data-target="#logoutModal"
+                            onClick={logout}>
                             <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
-                        </a>
+                        </div>
                     </div>
                 </li>
 
