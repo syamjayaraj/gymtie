@@ -1,24 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Formik } from 'formik';
 import DatePicker from 'react-date-picker';
-import { toast } from "react-toastify";
-import { addMember } from "../services/memberApi";
-
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function MemberForm({
     showModal,
     setShowModal,
-    handleAddMember
+    handleAddMember,
+    initialValuesProps
 }) {
-    const [value, onChange] = useState<Value>(new Date());
-
+    const [initialValues, setInitialValues] = useState(
+        {
+            name: "",
+            email: '',
+            phoneNumber: '',
+            phoneNumber2: '',
+            address: "",
+            city: "Kozhikode",
+            state: "Kerala",
+            country: "India",
+            about: "",
+            age: "",
+            pincode: "",
+        }
+    )
     const [joiningDate, setJoiningDate] = useState(new Date())
     const handleChangeJoiningDate = (date) => {
-        console.log(date, "date")
         setJoiningDate(date)
     }
+
+    useEffect(() => {
+        if (initialValuesProps?._id) {
+            setInitialValues(initialValuesProps)
+        }
+    }, [initialValuesProps])
+    console.log(initialValues, "init")
 
 
     return (
@@ -36,19 +51,7 @@ export default function MemberForm({
                     <div className="modal-body">
 
                         <Formik
-                            initialValues={{
-                                name: "",
-                                email: '',
-                                phoneNumber: '',
-                                phoneNumber2: '',
-                                address: "",
-                                city: "Kozhikode",
-                                state: "Kerala",
-                                country: "India",
-                                about: "",
-                                age: "",
-                                pincode: "",
-                            }}
+                            initialValues={initialValues}
                             validate={values => {
                                 const errors: any = {
                                     // email: "",
@@ -66,7 +69,13 @@ export default function MemberForm({
                             }}
 
                             onSubmit={(values, { setSubmitting }) => {
-                                handleAddMember({ ...values, joiningDate: joiningDate }, setSubmitting)
+                                if (initialValuesProps?._id) {
+                                    // Editing an existing member
+                                    // handleEditMember({ ...values, joiningDate: joiningDate }, setSubmitting);
+                                } else {
+                                    // Adding a new member
+                                    handleAddMember({ ...values, joiningDate: joiningDate }, setSubmitting);
+                                }
                             }}
                         >
                             {({

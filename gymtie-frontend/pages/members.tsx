@@ -15,6 +15,8 @@ export default function Members() {
     const [membersForRender, setMembersForRender] = useState([])
 
     const [members, setMembers] = useState([])
+    const [memberToBeEdited, setMemberToBeEdited] = useState({})
+
 
     const handleAddMemberModal = () => {
         setShowAddMemberModal(true)
@@ -46,6 +48,11 @@ export default function Members() {
                 setMembers(members.filter((item) => item._id != memberId));
             }
         }
+    }
+
+    const handleEditMemberModal = async (param) => {
+        setMemberToBeEdited(param)
+        setShowAddMemberModal(true)
     }
 
     useEffect(() => {
@@ -80,24 +87,7 @@ export default function Members() {
                             fontSize: ".7em",
                             marginRight: ".5rem"
                         }}
-                        onClick={() =>
-                            confirmAlert({
-                                title: '',
-                                message: 'Are you sure you want to delete this member?',
-                                closeOnEscape: true,
-                                closeOnClickOutside: true,
-                                buttons: [
-                                    {
-                                        label: 'Yes',
-                                        onClick: () =>
-                                            handleDeleteMember(members[index]._id)
-                                    },
-                                    {
-                                        label: 'No',
-                                        onClick: () => { }
-                                    }
-                                ]
-                            })}>
+                        onClick={() => handleEditMemberModal(members[index])}>
                         Edit
                     </div>
                     <div
@@ -223,6 +213,7 @@ export default function Members() {
                     showModal={showAddMemberModal}
                     setShowModal={setShowAddMemberModal}
                     handleAddMember={handleAddMember}
+                    initialValuesProps={memberToBeEdited}
                 />
 
                 {/* <!-- Content Wrapper --> */}
