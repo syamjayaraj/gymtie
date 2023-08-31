@@ -5,21 +5,19 @@ import AppContext from "../AppContext";
 import { submitLoginForm } from "../services/ownerApi";
 
 export default function Login() {
-
-  const value = useContext(AppContext);
-  let { userData } = value?.state;
-
   const router = useRouter()
 
-  useEffect(() => {
-    if (userData !== "") {
-      if (userData?.token) {
+  if (typeof window !== 'undefined') {
+    const userToken = localStorage.getItem('userToken');
+
+    useEffect(() => {
+      if (userToken) {
         router?.push("/")
       }
       else {
       }
-    }
-  }, [userData]);
+    }, [userToken]);
+  }
 
 
   const submitForm = async (values, setSubmitting) => {

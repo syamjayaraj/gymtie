@@ -3,9 +3,11 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
-import { deleteMember, listMembers } from "../services/memberApi"
+import { addMember, deleteMember, listMembers } from "../services/memberApi"
 import { confirmAlert } from 'react-confirm-alert';
 import MemberForm from "../components/member-form";
+import { toast } from "react-toastify";
+import moment from "moment"
 
 export default function Members() {
 
@@ -18,9 +20,25 @@ export default function Members() {
         setShowAddMemberModal(true)
     }
 
+    const handleAddMember = async (values, setSubmitting) => {
+        setSubmitting(true);
+        const res: any = await addMember(values)
+        if (res?.status === 200) {
+            toast.success('Member Added Successfully');
+            const newMembersList = [...members, res?.data?.data]
+            console.log(newMembersList, "lorem")
+            setMembers(newMembersList)
+            setShowAddMemberModal(false)
+        } else {
+            setShowAddMemberModal(false)
+        }
+        setSubmitting(false);
+    };
+
     const handleDeleteMember = async (memberId) => {
         const res: any = await deleteMember(memberId)
         if (res?.status === 200) {
+            toast.success('Member Deleted Successfully');
             var memberIndex = members.findIndex(function (o) {
                 return o._id === memberId;
             });
@@ -48,6 +66,9 @@ export default function Members() {
         membersArray.map((item, index) => {
             item.id = (
                 <div style={{ fontWeight: "bold", fontSize: "1.2em" }}>{item._id}</div>
+            );
+            item.joiningDate = (
+                <div>{moment(item.joiningDate).format("Do MMM YYYY")}</div>
             );
             item.action = (
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -172,15 +193,15 @@ export default function Members() {
             },
             {
                 label: "Joining date",
-                field: "startDate",
+                field: "joiningDate",
                 sort: "asc",
                 width: 150
             },
             {
-                label: "Payment Status",
-                field: "paymentStatus",
+                label: "About",
+                field: "about",
                 sort: "asc",
-                width: 100
+                width: 200
             },
             {
                 label: "Action",
@@ -198,7 +219,11 @@ export default function Members() {
             <div id="wrapper">
                 {/* <!-- Sidebar --> */}
                 <Sidebar />
-                <MemberForm />
+                <MemberForm
+                    showModal={showAddMemberModal}
+                    setShowModal={setShowAddMemberModal}
+                    handleAddMember={handleAddMember}
+                />
 
                 {/* <!-- Content Wrapper --> */}
                 <div id="content-wrapper" className="d-flex flex-column">
