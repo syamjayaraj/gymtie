@@ -23,7 +23,7 @@ export default function Login() {
 
   const submitForm = async (values, setSubmitting) => {
     setSubmitting(true);
-    let res = await fetch("http://localhost:3026/owners/login", {
+    let res: any = await fetch("http://localhost:3026/owners/login", {
       headers: {
         "Content-Type": "application/json"
       },

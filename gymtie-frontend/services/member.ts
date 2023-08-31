@@ -21,5 +21,5 @@ export const deleteMember = async (memberId) => {
       method: "DELETE"
     });
     res = await res.json();
-    return res
+    return res as any
 };

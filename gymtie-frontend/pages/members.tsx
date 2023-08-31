@@ -7,7 +7,7 @@ import { deleteMember, listMembers } from "../services/member"
 import { confirmAlert } from 'react-confirm-alert';
 import MemberForm from "../components/member-form";
 
-export default function users() {
+export default function Members() {
 
     const [showAddMemberModal, setShowAddMemberModal] = useState(false)
     const [membersForRender, setMembersForRender] = useState([])
@@ -19,7 +19,7 @@ export default function users() {
     }
 
     const handleDeleteMember = async (memberId) => {
-        const res = await deleteMember(memberId)
+        const res: any = await deleteMember(memberId)
         if (res?.status === 200) {
             var memberIndex = members.findIndex(function (o) {
                 return o._id === memberId;
@@ -32,7 +32,7 @@ export default function users() {
 
     useEffect(() => {
         const handleListMembers = async () => {
-            const res = await listMembers()
+            const res: any = await listMembers()
             if (res?.status === 200) {
                 setMembers(res?.data)
             } else {

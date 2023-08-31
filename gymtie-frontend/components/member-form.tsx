@@ -48,7 +48,13 @@ export default function MemberForm() {
                     <div className="modal-body">
 
                         <Formik
-                            initialValues={{ email: '', password: '' }}
+                            initialValues={{
+                                name: "",
+                                email: '',
+                                phoneNumber: '',
+                                phoneNumber2: ''
+
+                            }}
                             validate={values => {
                                 const errors: any = {
                                     // email: "",
@@ -61,9 +67,6 @@ export default function MemberForm() {
                                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                                 ) {
                                     errors.email = 'Invalid email address';
-                                }
-                                if (!values.password) {
-                                    errors.password = 'Required';
                                 }
                                 return errors;
                             }}

@@ -4,6 +4,7 @@ import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { useRouter } from "next/router";
 import AppContext from "../AppContext";
+import Link from "next/link";
 
 
 export default function Dashboard() {
@@ -45,8 +46,8 @@ export default function Dashboard() {
                             {/*<-- Page Heading -->*/}
                             {/* <div className="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-                                <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                                <Link href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    className="fas fa-download fa-sm text-white-50"></i> Generate Report</Link>
                             </div> */}
 
                             {/*<-- Content Row -->*/}
@@ -151,17 +152,17 @@ export default function Dashboard() {
                                             className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                             <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
                                             <div className="dropdown no-arrow">
-                                                <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                <Link className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                </a>
+                                                </Link>
                                                 <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                                     aria-labelledby="dropdownMenuLink">
                                                     <div className="dropdown-header">Dropdown Header:</div>
-                                                    <a className="dropdown-item" href="#">Action</a>
-                                                    <a className="dropdown-item" href="#">Another action</a>
+                                                    <Link className="dropdown-item" href="#">Action</Link>
+                                                    <Link className="dropdown-item" href="#">Another action</Link>
                                                     <div className="dropdown-divider"></div>
-                                                    <a className="dropdown-item" href="#">Something else here</a>
+                                                    <Link className="dropdown-item" href="#">Something else here</Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,17 +183,17 @@ export default function Dashboard() {
                                             className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                             <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
                                             <div className="dropdown no-arrow">
-                                                <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                <Link className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                </a>
+                                                </Link>
                                                 <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                                     aria-labelledby="dropdownMenuLink">
                                                     <div className="dropdown-header">Dropdown Header:</div>
-                                                    <a className="dropdown-item" href="#">Action</a>
-                                                    <a className="dropdown-item" href="#">Another action</a>
+                                                    <Link className="dropdown-item" href="#">Action</Link>
+                                                    <Link className="dropdown-item" href="#">Another action</Link>
                                                     <div className="dropdown-divider"></div>
-                                                    <a className="dropdown-item" href="#">Something else here</a>
+                                                    <Link className="dropdown-item" href="#">Something else here</Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -233,9 +234,9 @@ export default function Dashboard() {
             {/*<-- End of Page Wrapper -->*/}
 
             {/*<-- Scroll to Top Button-->*/}
-            <a className="scroll-to-top rounded" href="#page-top">
+            <Link className="scroll-to-top rounded" href="#page-top">
                 <i className="fas fa-angle-up"></i>
-            </a>
+            </Link>
 
             {/*<-- Logout Modal-->*/}
             <div className="modal fade" id="logoutModal"
@@ -250,10 +251,10 @@ export default function Dashboard() {
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div className="modal-body">Select Logout below if you are ready to end your current session.</div>
                         <div className="modal-footer">
                             <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a className="btn btn-primary" href="login.html">Logout</a>
+                            <Link className="btn btn-primary" href="login.html">Logout</Link>
                         </div>
                     </div>
                 </div>

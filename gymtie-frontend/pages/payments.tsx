@@ -2,7 +2,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 
-export default function users() {
+export default function Payment() {
     return (
         <>
             {/* <!-- Page Wrapper --> */}
