@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Formik } from 'formik';
 import { useRouter } from "next/router";
 import AppContext from "../AppContext";
+import { submitLoginForm } from "../services/ownerApi";
 
 export default function Login() {
 
@@ -23,21 +24,13 @@ export default function Login() {
 
   const submitForm = async (values, setSubmitting) => {
     setSubmitting(true);
-    let res: any = await fetch("http://localhost:3026/owners/login", {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify({
-        email: values?.email,
-        password: values?.password,
-      }),
-    });
-    res = await res.json();
+    const res: any = await submitLoginForm(values)
     if (res?.status === 200) {
       localStorage.setItem("userToken", res?.data?.token)
       localStorage.setItem("userData", JSON.stringify(res?.data));
       router?.push("/")
+    } else {
+
     }
     setSubmitting(false);
   };

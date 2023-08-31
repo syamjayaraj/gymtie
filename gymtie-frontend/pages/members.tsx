@@ -3,7 +3,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
-import { deleteMember, listMembers } from "../services/member"
+import { deleteMember, listMembers } from "../services/memberApi"
 import { confirmAlert } from 'react-confirm-alert';
 import MemberForm from "../components/member-form";
 
