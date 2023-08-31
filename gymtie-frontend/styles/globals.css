@@ -11279,3 +11279,16 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+.react-date-picker__wrapper {
+  border:none !important
+}
+textarea {
+  resize: none;
+}
+.validation-error-message {
+  color: #fe4c4c;
+}
+.label {
+  font-size: .9em;
+}

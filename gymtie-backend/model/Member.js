@@ -44,6 +44,9 @@ let memberSchema = new Schema(
     email: {
       type: String,
     },
+    age: {
+      type: String,
+    },
     images: {
       type: Array,
     },
@@ -70,6 +73,7 @@ memberSchema.statics.returnable = [
   "phoneNumber",
   "phoneNumber2",
   "email",
+  "age",
   "images",
   "isListed",
 ];
@@ -88,6 +92,7 @@ memberSchema.statics.fillable = [
   "phoneNumber",
   "phoneNumber2",
   "email",
+  "age",
   "images",
 ];
 
