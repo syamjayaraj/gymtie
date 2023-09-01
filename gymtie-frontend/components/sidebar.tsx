@@ -31,13 +31,10 @@ export default function Sidebar() {
 
 
 
-                {/*<-- Heading -->*/}
-                {/* <div className="sidebar-heading">
-                    Addons
-                </div> */}
+
 
                 {/*<-- Nav Item - Tables -->*/}
-                <li className={`nav-item ${path === "/users" ? "active" : ""}`}>
+                <li className={`nav-item ${path === "/members" ? "active" : ""}`}>
                     <Link href="/members" className="nav-link">
                         <i className="fas fa-fw fa-table"></i>
                         <span>Members</span>
@@ -53,7 +50,16 @@ export default function Sidebar() {
                 </li>
 
 
+                <div className="sidebar-heading">
+                    Settings
+                </div>
 
+                <li className={`nav-item ${path === "/settings/members" ? "active" : ""}`}>
+                    <Link href="/settings/members" className="nav-link">
+                        <i className="fas fa-fw fa-table"></i>
+                        <span>Members</span>
+                    </Link>
+                </li>
 
 
                 {/*<-- Sidebar Toggler (Sidebar) -->*/}

@@ -9,6 +9,7 @@ import MemberForm from "../components/member-form";
 import { toast } from "react-toastify";
 import moment from "moment"
 import { memberTableColumns } from "../const/member-table";
+import PaymentForm from "../components/payment-form";
 
 export default function Members() {
 
@@ -19,42 +20,12 @@ export default function Members() {
     const [memberToBeEdited, setMemberToBeEdited] = useState({})
 
 
-    const handleAddMemberModal = () => {
-        setShowAddMemberModal(true)
-    }
-
-    const handleAddMember = async (values, setSubmitting) => {
-        setSubmitting(true);
-        const res: any = await addMember(values)
-        if (res?.status === 200) {
-            toast.success('Member Added Successfully');
-            const newMembersList = [...members, res?.data?.data]
-            console.log(newMembersList, "lorem")
-            setMembers(newMembersList)
-            setShowAddMemberModal(false)
-        } else {
-            setShowAddMemberModal(false)
-        }
-        setSubmitting(false);
-    };
-
-    const handleDeleteMember = async (memberId) => {
-        const res: any = await deleteMember(memberId)
-        if (res?.status === 200) {
-            toast.success('Member Deleted Successfully');
-            var memberIndex = members.findIndex(function (o) {
-                return o._id === memberId;
-            });
-            if (memberIndex !== -1) {
-                setMembers(members.filter((item) => item._id != memberId));
-            }
-        }
-    }
-
-    const handleEditMemberModal = async (param) => {
+    const handleEditPaymentModal = async (param) => {
         setMemberToBeEdited(param)
         setShowAddMemberModal(true)
     }
+
+
 
     useEffect(() => {
         const handleListMembers = async () => {
@@ -88,36 +59,14 @@ export default function Members() {
                             fontSize: ".7em",
                             marginRight: ".5rem"
                         }}
-                        onClick={() => handleEditMemberModal(members[index])}>
-                        Edit
-                    </div>
-                    <div
-                        className="uil-trash-alt"
-                        style={{
-                            cursor: "pointer",
-                            color: "#fb6262",
-                            fontSize: ".7em",
+                        onClick={() => handleEditPaymentModal(members[index])}>
 
-                        }}
-                        onClick={() =>
-                            confirmAlert({
-                                title: '',
-                                message: 'Are you sure you want to delete this member?',
-                                closeOnEscape: true,
-                                closeOnClickOutside: true,
-                                buttons: [
-                                    {
-                                        label: 'Yes',
-                                        onClick: () =>
-                                            handleDeleteMember(members[index]._id)
-                                    },
-                                    {
-                                        label: 'No',
-                                        onClick: () => { }
-                                    }
-                                ]
-                            })}>
-                        Delete
+                        <button
+                            className="btn btn-secondary btn-user btn-block"
+                            type="submit"
+                        >
+                            Pay Fee
+                        </button>
                     </div>
                 </div>
             );
@@ -131,15 +80,18 @@ export default function Members() {
         rows: membersForRender
     };
 
+    const handleAddPayment = () => {
+
+    }
 
     return (
         <>
             <div id="wrapper">
                 <Sidebar />
-                <MemberForm
+                <PaymentForm
                     showModal={showAddMemberModal}
                     setShowModal={setShowAddMemberModal}
-                    handleAddMember={handleAddMember}
+                    handleAddPayment={handleAddPayment}
                     initialValuesProps={memberToBeEdited}
                 />
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -152,17 +104,6 @@ export default function Members() {
                                 alignItems: "center"
                             }}>
                                 <h1 className="h3 mb-2 text-gray-800">Members</h1>
-                                <div className="">
-                                    <button type="button" className="btn btn-secondary btn-lg" style={{
-                                        alignItems: "center",
-                                        alignContent: "center",
-                                        display: "flex",
-                                        padding: "0rem 3rem",
-                                        fontSize: "1.1rem"
-                                    }}
-                                        onClick={handleAddMemberModal}
-                                    >Add</button>
-                                </div>
                             </div>
                             <div className="card shadow mb-4">
                                 <div className="card-body">

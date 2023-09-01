@@ -5,15 +5,14 @@ import DatePicker from 'react-date-picker';
 export default function PaymentForm({
     showModal,
     setShowModal,
-    handleAddMember,
+    handleAddPayment,
     initialValuesProps
 }) {
     const [initialValues, setInitialValues] = useState(
         {
             name: "",
-            email: '',
-            phoneNumber: '',
-            phoneNumber2: '',
+            fee: 600,
+            memberId: '',
         }
     )
     const [joiningDate, setJoiningDate] = useState(new Date())
@@ -36,7 +35,7 @@ export default function PaymentForm({
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Add Member</h5>
+                        <h5 className="modal-title">Add Payment</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => setShowModal(false)}>
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -44,6 +43,7 @@ export default function PaymentForm({
                     <div className="modal-body">
 
                         <Formik
+                            enableReinitialize
                             initialValues={initialValues}
                             validate={values => {
                                 const errors: any = {
@@ -52,11 +52,6 @@ export default function PaymentForm({
                                 };
                                 if (!values.name) {
                                     errors.name = 'Required';
-                                }
-                                else if (
-                                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                                ) {
-                                    errors.email = 'Invalid email address';
                                 }
                                 return errors;
                             }}
@@ -67,7 +62,7 @@ export default function PaymentForm({
                                     // handleEditMember({ ...values, joiningDate: joiningDate }, setSubmitting);
                                 } else {
                                     // Adding a new member
-                                    handleAddMember({ ...values, joiningDate: joiningDate }, setSubmitting);
+                                    handleAddPayment({ ...values, joiningDate: joiningDate }, setSubmitting);
                                 }
                             }}
                         >
@@ -86,7 +81,7 @@ export default function PaymentForm({
                                     onSubmit={handleSubmit}
                                 >
                                     <div className="form-group">
-
+                                        <label>Name</label>
                                         <input
                                             className="form-control"
                                             type="text"
@@ -99,6 +94,38 @@ export default function PaymentForm({
                                         />
                                         <p className="validation-error-message">
                                             {errors.name && touched.name && errors.name}
+                                        </p>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Member ID</label>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            name="memberId"
+                                            placeholder="Member ID"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.memberId}
+                                            disabled
+                                        />
+                                        <p className="validation-error-message">
+                                            {errors.memberId && touched.memberId && errors.memberId}
+                                        </p>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Fee</label>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            name="fee"
+                                            placeholder="Fee"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.fee}
+                                        />
+                                        <p className="validation-error-message">
+                                            {errors.fee && touched.fee && errors.fee}
                                         </p>
                                     </div>
 
@@ -117,6 +144,7 @@ export default function PaymentForm({
                                             {errors.joiningDate && touched.joiningDate && errors.joiningDate}
                                         </p> */}
                                     </div>
+
                                     <div className="form-group">
                                         <button
                                             className="btn btn-secondary btn-block"

@@ -1,4 +1,4 @@
-export const memberTableColumns = [
+export const memberTableSettingsColumns = [
     {
         label: "Name",
         field: "name",
@@ -70,6 +70,38 @@ export const memberTableColumns = [
         field: "about",
         sort: "asc",
         width: 200
+    },
+    {
+        label: "Action",
+        field: "action",
+        width: 100,
+    },
+]
+
+export const memberTableColumns = [
+    {
+        label: "Name",
+        field: "name",
+        sort: "asc",
+        width: 150
+    },
+    {
+        label: "Member ID",
+        field: "memberId",
+        sort: "asc",
+        width: 100
+    },
+    {
+        label: "Phone Number",
+        field: "phoneNumber",
+        sort: "asc",
+        width: 100
+    },
+    {
+        label: "Joining date",
+        field: "joiningDate",
+        sort: "asc",
+        width: 150
     },
     {
         label: "Action",

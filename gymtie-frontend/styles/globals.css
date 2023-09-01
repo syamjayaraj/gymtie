@@ -11289,6 +11289,8 @@ textarea {
 .validation-error-message {
   color: #fe4c4c;
 }
-.label {
-  font-size: .9em;
+label {
+  font-size: .8em;
+  margin-bottom: .1rem;
+  margin-left: .2rem;
 }

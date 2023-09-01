@@ -51,6 +51,7 @@ export default function MemberForm({
                     <div className="modal-body">
 
                         <Formik
+                            enableReinitialize
                             initialValues={initialValues}
                             validate={values => {
                                 const errors: any = {
@@ -93,7 +94,6 @@ export default function MemberForm({
                                     onSubmit={handleSubmit}
                                 >
                                     <div className="form-group">
-
                                         <input
                                             className="form-control"
                                             type="text"
