@@ -80,8 +80,8 @@ memberSchema.statics.returnable = [
 ];
 
 memberSchema.statics.fillable = [
-  "gym",
   "name",
+  "gym",
   "joiningDate",
   "about",
   "address",

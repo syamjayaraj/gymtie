@@ -6,10 +6,12 @@ let paymentSchema = new Schema(
     gym: {
       type: Schema.Types.ObjectId,
       ref: "gym",
+      required: true,
     },
     member: {
       type: Schema.Types.ObjectId,
       ref: "member",
+      required: true,
     },
     amount: {
       type: Number,
@@ -30,14 +32,21 @@ let paymentSchema = new Schema(
   { timestamps: true }
 );
 
-paymentSchema.statics.fillable = ["gym", "member", "amount", "show"];
+paymentSchema.statics.fillable = [
+  "gym",
+  "member",
+  "amount",
+  "paymentDate",
+  "note",
+];
 
 paymentSchema.statics.returnable = [
   "_id",
   "gym",
   "member",
   "amount",
-  "show",
+  "paymentDate",
+  "note",
   "createdAt",
   "updatedAt",
 ];

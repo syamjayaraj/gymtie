@@ -71,17 +71,20 @@ createNewGym = (req, res) => {
       gym = _.merge(gym, _.pick(req.body, models.Gym.fillable));
       gym.slug = generateSlug(req.body.name);
       gym?.owners?.push(req?.body?.owner);
-      owner = await models?.Owner?.findOne({
-        _id: req?.body?.owner,
-      });
-      owner.gym = gym?._id;
-      owner = await owner?.save();
+
       gym.markModified("images");
       gym.markModified("owners");
       gym = await gym.save();
       gym = await models.Gym.findOne({
         _id: gym._id,
       });
+
+      owner = await models?.Owner?.findOne({
+        _id: req?.body?.owner,
+      });
+      owner.gym = gym?._id;
+      owner = await owner?.save();
+
       resolve({
         status: 200,
         data: gym,

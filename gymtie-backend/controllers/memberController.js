@@ -1,30 +1,12 @@
 let models = require("../model");
 const _ = require("lodash");
 
-listMemberCustomer = (req) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let members = await models.Category.find({
-        isListed: true,
-      });
-      resolve({
-        status: 200,
-        data: members,
-      });
-    } catch (err) {
-      reject({
-        status: 200,
-        message: err.message,
-      });
-    }
-  });
-};
-
 listMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       let { limit, skip } = req.query;
       let members = await models.Member.find({
+        gym: req?.admin?.gym,
         isListed: true,
       })
         .limit(Number(limit))
@@ -47,22 +29,14 @@ listMember = (req) => {
 addNewMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (req?.admin?.userType === "Admin") {
-        let member = new models.Member(req.body);
-        member = await member.save();
-        resolve({
-          status: 200,
-          data: member,
-        });
-      } else if (req?.admin?.userType === "Owner") {
-        const params = { ...req.body, gym: req.admin?.gym };
-        let member = new models.Member(params);
-        member = await member.save();
-        resolve({
-          status: 200,
-          data: member,
-        });
-      }
+      const params = { ...req.body, gym: req?.admin?.gym };
+      let member = new models.Member();
+      member = _.merge(member, _.pick(params, models.Member.fillable));
+      member = await member.save();
+      resolve({
+        status: 200,
+        data: member,
+      });
     } catch (err) {
       reject({
         status: 200,
@@ -76,12 +50,15 @@ editMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       let member = await models.Member.findOne({
-        _id: req.params.id,
+        _id: req?.params?.id,
+        gym: req?.admin?.gym,
+        isListed: true,
       });
       member = _.merge(member, _.pick(req.body, models.Member.fillable));
       member = await member.save();
       member = await models.Member.findOne({
         _id: member._id,
+        isListed: true,
       });
 
       resolve({
@@ -100,7 +77,11 @@ editMember = (req) => {
 getMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let member = await models.Member.findById(req.params.id);
+      let member = await models.Member.findOne({
+        _id: req.params.id,
+        gym: req?.admin?.gym,
+        isListed: true,
+      });
       resolve({
         status: 200,
         data: member,
@@ -119,6 +100,7 @@ deleteMember = (req) => {
     try {
       let member = await models.Member.findOne({
         _id: req.params.id,
+        gym: req?.admin?.gym,
         isListed: true,
       });
       if (member) {
@@ -145,7 +127,6 @@ deleteMember = (req) => {
 
 module.exports = {
   getMember,
-  listMemberCustomer,
   listMember,
   addNewMember,
   editMember,
