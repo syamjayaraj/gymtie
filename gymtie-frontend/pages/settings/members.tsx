@@ -38,6 +38,27 @@ export default function Members() {
         setSubmitting(false);
     };
 
+    const handleEditMember = async (values, setSubmitting) => {
+        setSubmitting(true);
+        const res: any = await addMember(values)
+        if (res?.status === 200) {
+            toast.success('Member Updated Successfully');
+
+            var memberIndex = members.findIndex(function (o) {
+                return o._id === values?._id;
+            });
+
+            if (memberIndex !== -1) {
+                members[memberIndex] = res?.data?.data
+                setMembers(members)
+            }
+            setShowAddMemberModal(false)
+        } else {
+            setShowAddMemberModal(false)
+        }
+        setSubmitting(false);
+    };
+
     const handleDeleteMember = async (memberId) => {
         const res: any = await deleteMember(memberId)
         if (res?.status === 200) {
@@ -140,6 +161,7 @@ export default function Members() {
                     showModal={showAddMemberModal}
                     setShowModal={setShowAddMemberModal}
                     handleAddMember={handleAddMember}
+                    handleEditMember={handleEditMember}
                     initialValuesProps={memberToBeEdited}
                 />
                 <div id="content-wrapper" className="d-flex flex-column">

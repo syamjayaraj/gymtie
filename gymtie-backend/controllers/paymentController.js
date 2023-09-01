@@ -8,7 +8,7 @@ listPayment = (req) => {
         isListed: true,
         gym: req?.admin?.gym,
       })
-        .populate("member", "name phoneNumber joiningDate")
+        .populate("member", "name memberId phoneNumber joiningDate")
         .sort({ _id: -1 });
 
       resolve({

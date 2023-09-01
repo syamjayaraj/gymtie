@@ -6,6 +6,7 @@ export default function MemberForm({
     showModal,
     setShowModal,
     handleAddMember,
+    handleEditMember,
     initialValuesProps
 }) {
     const [initialValues, setInitialValues] = useState(
@@ -71,8 +72,7 @@ export default function MemberForm({
 
                             onSubmit={(values, { setSubmitting }) => {
                                 if (initialValuesProps?._id) {
-                                    // Editing an existing member
-                                    // handleEditMember({ ...values, joiningDate: joiningDate }, setSubmitting);
+                                    handleEditMember({ ...values, joiningDate: joiningDate }, setSubmitting);
                                 } else {
                                     // Adding a new member
                                     handleAddMember({ ...values, joiningDate: joiningDate }, setSubmitting);

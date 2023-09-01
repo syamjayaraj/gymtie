@@ -61,6 +61,9 @@ export default function Payments() {
             item.name = (
                 <div>{item?.member?.name}</div>
             );
+            item.memberId = (
+                <div>{item?.member?.memberId}</div>
+            );
             item.phoneNumber = (
                 <div>{item?.member?.phoneNumber}</div>
             );
