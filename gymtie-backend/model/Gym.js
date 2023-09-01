@@ -7,9 +7,12 @@ let gymSchema = new Schema(
       type: String,
       required: true,
     },
-    owners: {
-      type: Array,
-    },
+    gym: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "owner",
+      },
+    ],
     slug: {
       type: String,
     },

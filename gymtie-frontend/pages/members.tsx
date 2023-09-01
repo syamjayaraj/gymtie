@@ -8,6 +8,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import MemberForm from "../components/member-form";
 import { toast } from "react-toastify";
 import moment from "moment"
+import { memberTableColumns } from "../const/member-table";
 
 export default function Members() {
 
@@ -126,88 +127,14 @@ export default function Members() {
     }, [members]);
 
     const data = {
-        columns: [
-            {
-                label: "Name",
-                field: "name",
-                sort: "asc",
-                width: 150
-            },
-            {
-                label: "Phone Number",
-                field: "phoneNumber",
-                sort: "asc",
-                width: 100
-            },
-            {
-                label: "Email",
-                field: "email",
-                sort: "asc",
-                width: 100
-            },
-            {
-                label: "Age",
-                field: "age",
-                sort: "asc",
-                width: 50
-            },
-            {
-                label: "Address",
-                field: "address",
-                sort: "asc",
-                width: 250
-            },
-            {
-                label: "City",
-                field: "city",
-                sort: "asc",
-                width: 100
-            },
-            {
-                label: "State",
-                field: "state",
-                sort: "asc",
-                width: 100
-            },
-            {
-                label: "Country",
-                field: "country",
-                sort: "asc",
-                width: 100
-            },
-            {
-                label: "PIN Code",
-                field: "pincode",
-                sort: "asc",
-                width: 100
-            },
-            {
-                label: "Joining date",
-                field: "joiningDate",
-                sort: "asc",
-                width: 150
-            },
-            {
-                label: "About",
-                field: "about",
-                sort: "asc",
-                width: 200
-            },
-            {
-                label: "Action",
-                field: "action",
-                width: 100,
-            },
-        ],
+        columns: memberTableColumns,
         rows: membersForRender
     };
 
 
     return (
         <>
-            {/* <!-- Page Wrapper --> */}
             <div id="wrapper">
-                {/* <!-- Sidebar --> */}
                 <Sidebar />
                 <MemberForm
                     showModal={showAddMemberModal}
@@ -215,22 +142,10 @@ export default function Members() {
                     handleAddMember={handleAddMember}
                     initialValuesProps={memberToBeEdited}
                 />
-
-                {/* <!-- Content Wrapper --> */}
                 <div id="content-wrapper" className="d-flex flex-column">
-
-
-                    {/* <!-- Main Content --> */}
                     <div id="content">
-
-                        {/* <!-- Topbar --> */}
                         <Navbar />
-                        {/* <!-- End of Topbar --> */}
-
-                        {/* <!-- Begin Page Content --> */}
                         <div className="container-fluid">
-
-                            {/* <!-- Page Heading --> */}
                             <div style={{
                                 display: "flex",
                                 justifyContent: "space-between",
@@ -249,8 +164,6 @@ export default function Members() {
                                     >Add</button>
                                 </div>
                             </div>
-
-                            {/* <!-- DataTales Example --> */}
                             <div className="card shadow mb-4">
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -264,17 +177,9 @@ export default function Members() {
                             </div>
 
                         </div>
-                        {/* <!-- /.container-fluid --> */}
-
                     </div>
-                    {/* <!-- End of Main Content --> */}
-
-                    {/* <!-- Footer --> */}
                     <Footer />
-                    {/* <!-- End of Footer --> */}
-
                 </div>
-                {/* <!-- End of Content Wrapper --> */}
             </div >
         </>
     )

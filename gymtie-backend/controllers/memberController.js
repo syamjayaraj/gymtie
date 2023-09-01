@@ -47,13 +47,22 @@ listMember = (req) => {
 addNewMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let member = new models.Member(req.body);
-      member = await member.save();
-
-      resolve({
-        status: 200,
-        data: member,
-      });
+      if (req?.admin?.userType === "Admin") {
+        let member = new models.Member(req.body);
+        member = await member.save();
+        resolve({
+          status: 200,
+          data: member,
+        });
+      } else if (req?.admin?.userType === "Owner") {
+        const params = { ...req.body, gym: req.admin?.gym };
+        let member = new models.Member(params);
+        member = await member.save();
+        resolve({
+          status: 200,
+          data: member,
+        });
+      }
     } catch (err) {
       reject({
         status: 200,

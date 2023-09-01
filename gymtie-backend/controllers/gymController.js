@@ -65,17 +65,17 @@ listGym = (req, res) => {
 };
 
 createNewGym = (req, res) => {
-  console.log(req.admin, "admin");
   return new Promise(async (resolve, reject) => {
     try {
       let gym = new models.Gym();
       gym = _.merge(gym, _.pick(req.body, models.Gym.fillable));
       gym.slug = generateSlug(req.body.name);
-      if (req?.admin?.userType === "Owner") {
-        gym?.owners?.push(req?.admin?._id);
-      } else if (req?.admin?.userType === "Admin") {
-        gym?.owners?.push(req?.body?.owner);
-      }
+      gym?.owners?.push(req?.body?.owner);
+      owner = await models?.Owner?.findOne({
+        _id: req?.body?.owner,
+      });
+      owner.gym = gym?._id;
+      owner = await owner?.save();
       gym.markModified("images");
       gym.markModified("owners");
       gym = await gym.save();

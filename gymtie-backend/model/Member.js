@@ -6,6 +6,7 @@ let memberSchema = new Schema(
     gym: {
       type: Schema.Types.ObjectId,
       ref: "gym",
+      required: true,
     },
     name: {
       type: String,

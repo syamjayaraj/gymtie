@@ -18,12 +18,10 @@ let ownerSchema = new Schema(
       required: true,
       unique: true,
     },
-    // gym: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "gym",
-    //   },
-    // ],
+    gym: {
+      type: Schema.Types.ObjectId,
+      ref: "gym",
+    },
     password: {
       type: String,
       required: true,
@@ -44,7 +42,7 @@ ownerSchema.methods.validatePassword = (password, hashedPassword) => {
   return res;
 };
 
-ownerSchema.statics.fillable = ["name", "mobile", "email"];
+ownerSchema.statics.fillable = ["name", "mobile", "email", "gym"];
 
 ownerSchema.statics.returnable = [
   "_id",
@@ -52,6 +50,7 @@ ownerSchema.statics.returnable = [
   "mobile",
   "email",
   "token",
+  "gym",
   "userType",
   "createdAt",
   "updatedAt",
