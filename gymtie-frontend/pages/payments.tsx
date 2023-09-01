@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
 import { addPayment, deletePayment, listPayments } from "../services/paymentApi"
 import { confirmAlert } from 'react-confirm-alert';
-import MemberForm from "../components/member-form";
+import MemberForm from "../components/payment-form";
 import { toast } from "react-toastify";
 import moment from "moment"
 import { paymentTableColumns } from "../const/payment-table";
@@ -13,10 +13,10 @@ import { paymentTableColumns } from "../const/payment-table";
 export default function Payments() {
 
     const [showAddMemberModal, setShowAddMemberModal] = useState(false)
-    const [membersForRender, setMembersForRender] = useState([])
+    const [paymentsForRender, setMembersForRender] = useState([])
 
-    const [members, setMembers] = useState([])
-    const [memberToBeEdited, setMemberToBeEdited] = useState({})
+    const [payments, setMembers] = useState([])
+    const [paymentToBeEdited, setMemberToBeEdited] = useState({})
 
 
     const handleAddMemberModal = () => {
@@ -28,9 +28,9 @@ export default function Payments() {
         const res: any = await addPayment(values)
         if (res?.status === 200) {
             toast.success('Payment Added Successfully');
-            const newMembersList = [...members, res?.data?.data]
-            console.log(newMembersList, "lorem")
-            setMembers(newMembersList)
+            const newPaymentsList = [...payments, res?.data?.data]
+            console.log(newPaymentsList, "lorem")
+            setMembers(newPaymentsList)
             setShowAddMemberModal(false)
         } else {
             setShowAddMemberModal(false)
@@ -38,15 +38,15 @@ export default function Payments() {
         setSubmitting(false);
     };
 
-    const handleDeleteMember = async (memberId) => {
-        const res: any = await deletePayment(memberId)
+    const handleDeleteMember = async (paymentId) => {
+        const res: any = await deletePayment(paymentId)
         if (res?.status === 200) {
             toast.success('Payment Deleted Successfully');
-            var memberIndex = members.findIndex(function (o) {
-                return o._id === memberId;
+            var paymentIndex = payments.findIndex(function (o) {
+                return o._id === paymentId;
             });
-            if (memberIndex !== -1) {
-                setMembers(members.filter((item) => item._id != memberId));
+            if (paymentIndex !== -1) {
+                setMembers(payments.filter((item) => item._id != paymentId));
             }
         }
     }
@@ -69,9 +69,9 @@ export default function Payments() {
     }, [])
 
     useEffect(() => {
-        let membersArray = JSON.parse(JSON.stringify(members));
-        let membersData = [];
-        membersArray.map((item, index) => {
+        let paymentsArray = JSON.parse(JSON.stringify(payments));
+        let paymentsData = [];
+        paymentsArray.map((item, index) => {
             item.id = (
                 <div style={{ fontWeight: "bold", fontSize: "1.2em" }}>{item._id}</div>
             );
@@ -88,7 +88,7 @@ export default function Payments() {
                             fontSize: ".7em",
                             marginRight: ".5rem"
                         }}
-                        onClick={() => handleEditMemberModal(members[index])}>
+                        onClick={() => handleEditMemberModal(payments[index])}>
                         Edit
                     </div>
                     <div
@@ -102,14 +102,14 @@ export default function Payments() {
                         onClick={() =>
                             confirmAlert({
                                 title: '',
-                                message: 'Are you sure you want to delete this member?',
+                                message: 'Are you sure you want to delete this payment?',
                                 closeOnEscape: true,
                                 closeOnClickOutside: true,
                                 buttons: [
                                     {
                                         label: 'Yes',
                                         onClick: () =>
-                                            handleDeleteMember(members[index]._id)
+                                            handleDeleteMember(payments[index]._id)
                                     },
                                     {
                                         label: 'No',
@@ -121,14 +121,14 @@ export default function Payments() {
                     </div>
                 </div>
             );
-            membersData.push(item);
+            paymentsData.push(item);
         });
-        setMembersForRender(membersData);
-    }, [members]);
+        setMembersForRender(paymentsData);
+    }, [payments]);
 
     const data = {
         columns: paymentTableColumns,
-        rows: membersForRender
+        rows: paymentsForRender
     };
 
 
@@ -136,12 +136,6 @@ export default function Payments() {
         <>
             <div id="wrapper">
                 <Sidebar />
-                <MemberForm
-                    showModal={showAddMemberModal}
-                    setShowModal={setShowAddMemberModal}
-                    handleAddMember={handleAddMember}
-                    initialValuesProps={memberToBeEdited}
-                />
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
                         <Navbar />

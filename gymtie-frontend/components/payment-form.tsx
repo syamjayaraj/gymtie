@@ -13,16 +13,22 @@ export default function PaymentForm({
             name: "",
             fee: 600,
             memberId: '',
+            note: ''
         }
     )
-    const [joiningDate, setJoiningDate] = useState(new Date())
+    const [paymentDate, setJoiningDate] = useState(new Date())
     const handleChangeJoiningDate = (date) => {
         setJoiningDate(date)
     }
 
     useEffect(() => {
         if (initialValuesProps?._id) {
-            setInitialValues(initialValuesProps)
+            setInitialValues({
+                name: initialValuesProps?.name,
+                fee: 600,
+                memberId: initialValuesProps?.memberId,
+                note: ""
+            })
         }
     }, [initialValuesProps])
     console.log(initialValues, "init")
@@ -57,13 +63,8 @@ export default function PaymentForm({
                             }}
 
                             onSubmit={(values, { setSubmitting }) => {
-                                if (initialValuesProps?._id) {
-                                    // Editing an existing member
-                                    // handleEditMember({ ...values, joiningDate: joiningDate }, setSubmitting);
-                                } else {
-                                    // Adding a new member
-                                    handleAddPayment({ ...values, joiningDate: joiningDate }, setSubmitting);
-                                }
+                                console.log("hai")
+                                handleAddPayment({ paymentDate: paymentDate, member: initialValuesProps?._id, fee: 600 }, setSubmitting);
                             }}
                         >
                             {({
@@ -133,7 +134,7 @@ export default function PaymentForm({
                                         <label>Payment Date</label>
                                         <DatePicker
                                             onChange={handleChangeJoiningDate}
-                                            value={joiningDate}
+                                            value={paymentDate}
                                             calendarIcon={false}
                                             clearIcon={false}
                                             className="form-control"
@@ -141,8 +142,24 @@ export default function PaymentForm({
                                             maxDate={new Date()}
                                         />
                                         {/* <p className="validation-error-message">
-                                            {errors.joiningDate && touched.joiningDate && errors.joiningDate}
+                                            {errors.paymentDate && touched.paymentDate && errors.paymentDate}
                                         </p> */}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Note</label>
+                                        <textarea
+                                            rows={3}
+                                            className="form-control"
+                                            name="note"
+                                            placeholder="Note"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.note}
+                                        />
+                                        <p className="validation-error-message">
+                                            {errors.note && touched.note && errors.note}
+                                        </p>
                                     </div>
 
                                     <div className="form-group">

@@ -32,13 +32,7 @@ let paymentSchema = new Schema(
   { timestamps: true }
 );
 
-paymentSchema.statics.fillable = [
-  "gym",
-  "member",
-  "amount",
-  "paymentDate",
-  "note",
-];
+paymentSchema.statics.fillable = ["member", "amount", "paymentDate", "note"];
 
 paymentSchema.statics.returnable = [
   "_id",

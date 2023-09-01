@@ -34,10 +34,10 @@ export default function Sidebar() {
 
 
                 {/*<-- Nav Item - Tables -->*/}
-                <li className={`nav-item ${path === "/members" ? "active" : ""}`}>
-                    <Link href="/members" className="nav-link">
+                <li className={`nav-item ${path === "/pay-fee" ? "active" : ""}`}>
+                    <Link href="/pay-fee" className="nav-link">
                         <i className="fas fa-fw fa-table"></i>
-                        <span>Members</span>
+                        <span>Pay Fee</span>
                     </Link>
                 </li>
 

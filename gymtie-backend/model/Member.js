@@ -86,7 +86,6 @@ memberSchema.statics.returnable = [
 
 memberSchema.statics.fillable = [
   "name",
-  "gym",
   "joiningDate",
   "about",
   "address",

@@ -1,36 +1,13 @@
 let models = require("../model");
 const _ = require("lodash");
 
-listPaymentCustomer = (req) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let payments = await models.Category.find({
-        isListed: true,
-      });
-      resolve({
-        status: 200,
-        data: payments,
-      });
-    } catch (err) {
-      reject({
-        status: 200,
-        message: err.message,
-      });
-    }
-  });
-};
-
 listPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let { limit, skip } = req.query;
       let payments = await models.Payment.find({
         isListed: true,
-      })
-        .limit(Number(limit))
-        .skip(Number(skip))
-        .populate("itemOwner");
-
+        gym: req?.admin?.gym,
+      });
       resolve({
         status: 200,
         data: payments,
@@ -47,9 +24,10 @@ listPayment = (req) => {
 addNewPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let payment = new models.Payment(req.body);
+      let payment = new models.Member();
+      payment = _.merge(payment, _.pick(req.body, models.Payment.fillable));
+      payment.gym = req?.admin?.gym;
       payment = await payment.save();
-
       resolve({
         status: 200,
         data: payment,
@@ -126,7 +104,6 @@ deletePayment = (req) => {
 
 module.exports = {
   getPayment,
-  listPaymentCustomer,
   listPayment,
   addNewPayment,
   editPayment,

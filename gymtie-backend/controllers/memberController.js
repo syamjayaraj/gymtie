@@ -5,14 +5,10 @@ const _ = require("lodash");
 listMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let { limit, skip } = req.query;
       let members = await models.Member.find({
         gym: req?.admin?.gym,
         isListed: true,
-      })
-        .limit(Number(limit))
-        .skip(Number(skip))
-        .populate("storeOwner");
+      });
 
       resolve({
         status: 200,
@@ -30,10 +26,9 @@ listMember = (req) => {
 addNewMember = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const params = { ...req.body, gym: req?.admin?.gym };
       let member = new models.Member();
-      member = _.merge(member, _.pick(params, models.Member.fillable));
-
+      member = _.merge(member, _.pick(req.body, models.Member.fillable));
+      member.gym = req?.admin?.gym;
       const numberOfMembers = await models?.Member?.countDocuments();
       member.memberId = generateMemberId(numberOfMembers);
 

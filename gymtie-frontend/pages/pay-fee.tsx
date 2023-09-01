@@ -10,9 +10,10 @@ import { toast } from "react-toastify";
 import moment from "moment"
 import { memberTableColumns } from "../const/member-table";
 import PaymentForm from "../components/payment-form";
-
-export default function Members() {
-
+import { addPayment } from "../services/paymentApi";
+import { useRouter } from "next/router";
+export default function PayFee() {
+    const router = useRouter()
     const [showAddMemberModal, setShowAddMemberModal] = useState(false)
     const [membersForRender, setMembersForRender] = useState([])
 
@@ -80,8 +81,18 @@ export default function Members() {
         rows: membersForRender
     };
 
-    const handleAddPayment = () => {
-
+    const handleAddPayment = async (values, setSubmitting) => {
+        setSubmitting(true);
+        const res: any = await addPayment(values)
+        if (res?.status === 200) {
+            toast.success('Payment Added Successfully');
+            setShowAddMemberModal(false)
+            router?.push("/payments")
+        } else {
+            setShowAddMemberModal(false)
+            toast.error('Error Adding Payment');
+        }
+        setSubmitting(false);
     }
 
     return (
@@ -103,7 +114,7 @@ export default function Members() {
                                 justifyContent: "space-between",
                                 alignItems: "center"
                             }}>
-                                <h1 className="h3 mb-2 text-gray-800">Members</h1>
+                                <h1 className="h3 mb-2 text-gray-800">Fee Payment</h1>
                             </div>
                             <div className="card shadow mb-4">
                                 <div className="card-body">
