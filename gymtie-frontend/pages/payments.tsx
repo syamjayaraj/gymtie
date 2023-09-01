@@ -151,7 +151,7 @@ export default function Payments() {
                                 justifyContent: "space-between",
                                 alignItems: "center"
                             }}>
-                                <h1 className="h3 mb-2 text-gray-800">Members</h1>
+                                <h1 className="h3 mb-2 text-gray-800">Payments</h1>
                                 <div className="">
                                     <button type="button" className="btn btn-secondary btn-lg" style={{
                                         alignItems: "center",

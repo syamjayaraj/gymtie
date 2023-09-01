@@ -1,3 +1,4 @@
+const generateMemberId = require("../lib/generateMemberId");
 let models = require("../model");
 const _ = require("lodash");
 
@@ -32,6 +33,10 @@ addNewMember = (req) => {
       const params = { ...req.body, gym: req?.admin?.gym };
       let member = new models.Member();
       member = _.merge(member, _.pick(params, models.Member.fillable));
+
+      const numberOfMembers = await models?.Member?.countDocuments();
+      member.memberId = generateMemberId(numberOfMembers);
+
       member = await member.save();
       resolve({
         status: 200,

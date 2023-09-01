@@ -6,6 +6,12 @@ export const memberTableColumns = [
         width: 150
     },
     {
+        label: "Member ID",
+        field: "memberId",
+        sort: "asc",
+        width: 100
+    },
+    {
         label: "Phone Number",
         field: "phoneNumber",
         sort: "asc",

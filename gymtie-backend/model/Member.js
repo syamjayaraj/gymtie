@@ -8,6 +8,11 @@ let memberSchema = new Schema(
       ref: "gym",
       required: true,
     },
+    memberId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     name: {
       type: String,
       required: true,
