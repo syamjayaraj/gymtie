@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { useRouter } from "next/router";
 import AppContext from "../AppContext";
 import { submitLoginForm } from "../services/ownerApi";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const router = useRouter()
@@ -29,7 +30,7 @@ export default function Login() {
       localStorage.setItem("userData", JSON.stringify(res?.data));
       router?.push("/")
     } else {
-
+      toast.error('Please check your Email address / password');
     }
     setSubmitting(false);
   };
