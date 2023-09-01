@@ -3,25 +3,25 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
-import { addPayment, deletePayment, listPayments } from "../services/paymentApi"
+import { deletePayment, listPayments, updatePayment } from "../services/paymentApi"
 import { confirmAlert } from 'react-confirm-alert';
-import MemberForm from "../components/payment-form";
+import PaymentForm from "../components/payment-form";
 import { toast } from "react-toastify";
 import moment from "moment"
 import { paymentTableColumns } from "../const/payment-table";
 
 export default function Payments() {
 
-    const [showAddMemberModal, setShowAddMemberModal] = useState(false)
-    const [paymentsForRender, setMembersForRender] = useState([])
+    const [showAddPaymentModal, setShowAddPaymentModal] = useState(false)
+    const [paymentsForRender, setPaymentsForRender] = useState([])
 
-    const [payments, setMembers] = useState([])
-    const [paymentToBeEdited, setMemberToBeEdited] = useState({})
-
-
+    const [payments, setPayments] = useState([])
+    const [paymentToBeEdited, setPaymentToBeEdited] = useState({})
 
 
-    const handleDeleteMember = async (paymentId) => {
+
+
+    const handleDeletePayment = async (paymentId) => {
         const res: any = await deletePayment(paymentId)
         if (res?.status === 200) {
             toast.success('Payment Deleted Successfully');
@@ -29,27 +29,30 @@ export default function Payments() {
                 return o._id === paymentId;
             });
             if (paymentIndex !== -1) {
-                setMembers(payments.filter((item) => item._id != paymentId));
+                setPayments(payments.filter((item) => item._id != paymentId));
             }
         }
     }
 
-    const handleEditMemberModal = async (param) => {
-        setMemberToBeEdited(param)
-        setShowAddMemberModal(true)
+    const handleEditPaymentModal = async (param) => {
+        const newParam = { ...param, name: param?.member?.name, memberId: param?.member?.memberId }
+        setPaymentToBeEdited(newParam)
+        setShowAddPaymentModal(true)
     }
 
     useEffect(() => {
-        const handleListMembers = async () => {
+        const handleListPayments = async () => {
             const res: any = await listPayments()
             if (res?.status === 200) {
-                setMembers(res?.data)
+                setPayments(res?.data)
             } else {
 
             }
         }
-        handleListMembers()
+        handleListPayments()
     }, [])
+
+
 
     useEffect(() => {
         let paymentsArray = JSON.parse(JSON.stringify(payments));
@@ -83,7 +86,7 @@ export default function Payments() {
                             fontSize: ".7em",
                             marginRight: ".5rem"
                         }}
-                        onClick={() => handleEditMemberModal(payments[index])}>
+                        onClick={() => handleEditPaymentModal(payments[index])}>
                         Edit
                     </div>
                     <div
@@ -104,7 +107,7 @@ export default function Payments() {
                                     {
                                         label: 'Yes',
                                         onClick: () =>
-                                            handleDeleteMember(payments[index]._id)
+                                            handleDeletePayment(payments[index]._id)
                                     },
                                     {
                                         label: 'No',
@@ -118,7 +121,7 @@ export default function Payments() {
             );
             paymentsData.push(item);
         });
-        setMembersForRender(paymentsData);
+        setPaymentsForRender(paymentsData);
     }, [payments]);
 
     const data = {
@@ -127,10 +130,41 @@ export default function Payments() {
     };
 
 
+    const handleEditPayment = async (values, setSubmitting) => {
+        console.log(values, "val")
+        setSubmitting(true);
+        const res: any = await updatePayment(values)
+        if (res?.status === 200) {
+            toast.success('Payment Updated Successfully');
+
+            var paymentIndex = payments.findIndex(function (o) {
+                return o._id === values?._id;
+            });
+
+            if (paymentIndex !== -1) {
+                payments[paymentIndex] = res?.data?.data
+                setPayments(payments)
+            }
+            setShowAddPaymentModal(false)
+        } else {
+            setShowAddPaymentModal(false)
+        }
+        setSubmitting(false);
+    };
+
+
     return (
         <>
             <div id="wrapper">
                 <Sidebar />
+                <PaymentForm
+                    showModal={showAddPaymentModal}
+                    setShowModal={setShowAddPaymentModal}
+                    handleAddPayment={null}
+                    handleEditPayment={handleEditPayment}
+                    initialValuesProps={paymentToBeEdited}
+                    type="edit"
+                />
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
                         <Navbar />

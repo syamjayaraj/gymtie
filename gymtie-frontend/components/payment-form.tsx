@@ -6,8 +6,11 @@ export default function PaymentForm({
     showModal,
     setShowModal,
     handleAddPayment,
-    initialValuesProps
+    handleEditPayment,
+    initialValuesProps,
+    type
 }) {
+    console.log(initialValuesProps, "lorem")
     const [initialValues, setInitialValues] = useState(
         {
             name: "",
@@ -25,9 +28,9 @@ export default function PaymentForm({
         if (initialValuesProps?._id) {
             setInitialValues({
                 name: initialValuesProps?.name,
-                amount: 600,
+                amount: initialValuesProps?.amount ?? 600,
                 memberId: initialValuesProps?.memberId,
-                note: ""
+                note: initialValuesProps?.note ?? ""
             })
         }
     }, [initialValuesProps])
@@ -63,13 +66,26 @@ export default function PaymentForm({
                             }}
 
                             onSubmit={(values, { setSubmitting }) => {
-                                handleAddPayment(
-                                    {
-                                        paymentDate: paymentDate,
-                                        member: initialValuesProps?._id,
-                                        amount: values?.amount,
-                                        note: values?.note
-                                    }, setSubmitting);
+
+
+                                if (type === "edit") {
+                                    handleEditPayment(
+                                        {
+                                            _id: initialValuesProps?._id,
+                                            paymentDate: paymentDate,
+                                            member: initialValuesProps?.member?._id,
+                                            amount: values?.amount,
+                                            note: values?.note
+                                        }, setSubmitting);
+                                } else {
+                                    handleAddPayment(
+                                        {
+                                            paymentDate: paymentDate,
+                                            member: initialValuesProps?._id,
+                                            amount: values?.amount,
+                                            note: values?.note
+                                        }, setSubmitting);
+                                }
                             }}
                         >
                             {({

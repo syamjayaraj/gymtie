@@ -22,6 +22,7 @@ export default function PayFee() {
 
 
     const handleEditPaymentModal = async (param) => {
+
         setMemberToBeEdited(param)
         setShowAddMemberModal(true)
     }
@@ -103,7 +104,9 @@ export default function PayFee() {
                     showModal={showAddMemberModal}
                     setShowModal={setShowAddMemberModal}
                     handleAddPayment={handleAddPayment}
+                    handleEditPayment={null}
                     initialValuesProps={memberToBeEdited}
+                    type="add"
                 />
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">

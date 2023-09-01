@@ -54,8 +54,8 @@ export default function Sidebar() {
                     Settings
                 </div> */}
 
-                <li className={`nav-item ${path === "/settings/members" ? "active" : ""}`}>
-                    <Link href="/settings/members" className="nav-link">
+                <li className={`nav-item ${path === "/members" ? "active" : ""}`}>
+                    <Link href="/members" className="nav-link">
                         <i className="fas fa-fw fa-table"></i>
                         <span>Members</span>
                     </Link>

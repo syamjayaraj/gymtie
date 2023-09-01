@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import Footer from "../../components/footer";
-import Navbar from "../../components/navbar";
-import Sidebar from "../../components/sidebar";
+import Footer from "../components/footer";
+import Navbar from "../components/navbar";
+import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
-import { addMember, deleteMember, listMembers } from "../../services/memberApi"
+import { addMember, deleteMember, listMembers, updateMember } from "../services/memberApi"
 import { confirmAlert } from 'react-confirm-alert';
-import MemberForm from "../../components/member-form";
+import MemberForm from "../components/member-form";
 import { toast } from "react-toastify";
 import moment from "moment"
-import { memberTableSettingsColumns } from "../../const/member-table";
+import { memberTableSettingsColumns } from "../const/member-table";
 
 export default function Members() {
 
@@ -40,7 +40,7 @@ export default function Members() {
 
     const handleEditMember = async (values, setSubmitting) => {
         setSubmitting(true);
-        const res: any = await addMember(values)
+        const res: any = await updateMember(values)
         if (res?.status === 200) {
             toast.success('Member Updated Successfully');
 
