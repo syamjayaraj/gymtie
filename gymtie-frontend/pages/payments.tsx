@@ -19,24 +19,7 @@ export default function Payments() {
     const [paymentToBeEdited, setMemberToBeEdited] = useState({})
 
 
-    const handleAddMemberModal = () => {
-        setShowAddMemberModal(true)
-    }
 
-    const handleAddMember = async (values, setSubmitting) => {
-        setSubmitting(true);
-        const res: any = await addPayment(values)
-        if (res?.status === 200) {
-            toast.success('Payment Added Successfully');
-            const newPaymentsList = [...payments, res?.data?.data]
-            console.log(newPaymentsList, "lorem")
-            setMembers(newPaymentsList)
-            setShowAddMemberModal(false)
-        } else {
-            setShowAddMemberModal(false)
-        }
-        setSubmitting(false);
-    };
 
     const handleDeleteMember = async (paymentId) => {
         const res: any = await deletePayment(paymentId)
@@ -73,10 +56,19 @@ export default function Payments() {
         let paymentsData = [];
         paymentsArray.map((item, index) => {
             item.id = (
-                <div style={{ fontWeight: "bold", fontSize: "1.2em" }}>{item._id}</div>
+                <div>{item?._id}</div>
             );
-            item.joiningDate = (
-                <div>{moment(item.joiningDate).format("Do MMM YYYY")}</div>
+            item.name = (
+                <div>{item?.member?.name}</div>
+            );
+            item.phoneNumber = (
+                <div>{item?.member?.phoneNumber}</div>
+            );
+            item.paymentDate = (
+                <div>{moment(item?.paymentDate).format("Do MMM YYYY")}</div>
+            );
+            item.amount = (
+                <div>{item?.amount}</div>
             );
             item.action = (
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -140,24 +132,6 @@ export default function Payments() {
                     <div id="content">
                         <Navbar />
                         <div className="container-fluid">
-                            <div style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center"
-                            }}>
-                                <h1 className="h3 mb-2 text-gray-800">Payments</h1>
-                                <div className="">
-                                    <button type="button" className="btn btn-secondary btn-lg" style={{
-                                        alignItems: "center",
-                                        alignContent: "center",
-                                        display: "flex",
-                                        padding: "0rem 3rem",
-                                        fontSize: "1.1rem"
-                                    }}
-                                        onClick={handleAddMemberModal}
-                                    >Add</button>
-                                </div>
-                            </div>
                             <div className="card shadow mb-4">
                                 <div className="card-body">
                                     <div className="table-responsive">

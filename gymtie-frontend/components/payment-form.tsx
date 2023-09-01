@@ -11,7 +11,7 @@ export default function PaymentForm({
     const [initialValues, setInitialValues] = useState(
         {
             name: "",
-            fee: 600,
+            amount: 600,
             memberId: '',
             note: ''
         }
@@ -25,7 +25,7 @@ export default function PaymentForm({
         if (initialValuesProps?._id) {
             setInitialValues({
                 name: initialValuesProps?.name,
-                fee: 600,
+                amount: 600,
                 memberId: initialValuesProps?.memberId,
                 note: ""
             })
@@ -63,8 +63,13 @@ export default function PaymentForm({
                             }}
 
                             onSubmit={(values, { setSubmitting }) => {
-                                console.log("hai")
-                                handleAddPayment({ paymentDate: paymentDate, member: initialValuesProps?._id, fee: 600 }, setSubmitting);
+                                handleAddPayment(
+                                    {
+                                        paymentDate: paymentDate,
+                                        member: initialValuesProps?._id,
+                                        amount: values?.amount,
+                                        note: values?.note
+                                    }, setSubmitting);
                             }}
                         >
                             {({
@@ -119,14 +124,14 @@ export default function PaymentForm({
                                         <input
                                             className="form-control"
                                             type="text"
-                                            name="fee"
+                                            name="amount"
                                             placeholder="Fee"
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={values.fee}
+                                            value={values.amount}
                                         />
                                         <p className="validation-error-message">
-                                            {errors.fee && touched.fee && errors.fee}
+                                            {errors.amount && touched.amount && errors.amount}
                                         </p>
                                     </div>
 

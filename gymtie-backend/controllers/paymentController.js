@@ -7,7 +7,10 @@ listPayment = (req) => {
       let payments = await models.Payment.find({
         isListed: true,
         gym: req?.admin?.gym,
-      });
+      })
+        .populate("member", "name phoneNumber joiningDate")
+        .sort({ _id: -1 });
+
       resolve({
         status: 200,
         data: payments,
@@ -24,7 +27,7 @@ listPayment = (req) => {
 addNewPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let payment = new models.Member();
+      let payment = new models.Payment();
       payment = _.merge(payment, _.pick(req.body, models.Payment.fillable));
       payment.gym = req?.admin?.gym;
       payment = await payment.save();
@@ -33,6 +36,7 @@ addNewPayment = (req) => {
         data: payment,
       });
     } catch (err) {
+      console.log(err, "err");
       reject({
         status: 200,
         message: err.message,

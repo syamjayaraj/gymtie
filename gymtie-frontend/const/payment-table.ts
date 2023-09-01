@@ -12,8 +12,20 @@ export const paymentTableColumns = [
         width: 100
     },
     {
-        label: "Joining date",
-        field: "joiningDate",
+        label: "Payment date",
+        field: "paymentDate",
+        sort: "asc",
+        width: 150
+    },
+    {
+        label: "Amount (₹)",
+        field: "amount",
+        sort: "asc",
+        width: 150
+    },
+    {
+        label: "Note",
+        field: "note",
         sort: "asc",
         width: 150
     },

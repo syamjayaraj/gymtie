@@ -50,9 +50,9 @@ export default function Sidebar() {
                 </li>
 
 
-                <div className="sidebar-heading">
+                {/* <div className="sidebar-heading">
                     Settings
-                </div>
+                </div> */}
 
                 <li className={`nav-item ${path === "/settings/members" ? "active" : ""}`}>
                     <Link href="/settings/members" className="nav-link">
