@@ -3,12 +3,12 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
-import { addMember, deleteMember, listMembers } from "../services/memberApi"
+import { addPayment, deletePayment, listPayments } from "../services/paymentApi"
 import { confirmAlert } from 'react-confirm-alert';
 import MemberForm from "../components/member-form";
 import { toast } from "react-toastify";
 import moment from "moment"
-import { memberTableColumns } from "../const/member-table";
+import { paymentTableColumns } from "../const/payment-table";
 
 export default function Payments() {
 
@@ -25,9 +25,9 @@ export default function Payments() {
 
     const handleAddMember = async (values, setSubmitting) => {
         setSubmitting(true);
-        const res: any = await addMember(values)
+        const res: any = await addPayment(values)
         if (res?.status === 200) {
-            toast.success('Member Added Successfully');
+            toast.success('Payment Added Successfully');
             const newMembersList = [...members, res?.data?.data]
             console.log(newMembersList, "lorem")
             setMembers(newMembersList)
@@ -39,9 +39,9 @@ export default function Payments() {
     };
 
     const handleDeleteMember = async (memberId) => {
-        const res: any = await deleteMember(memberId)
+        const res: any = await deletePayment(memberId)
         if (res?.status === 200) {
-            toast.success('Member Deleted Successfully');
+            toast.success('Payment Deleted Successfully');
             var memberIndex = members.findIndex(function (o) {
                 return o._id === memberId;
             });
@@ -58,7 +58,7 @@ export default function Payments() {
 
     useEffect(() => {
         const handleListMembers = async () => {
-            const res: any = await listMembers()
+            const res: any = await listPayments()
             if (res?.status === 200) {
                 setMembers(res?.data)
             } else {
@@ -127,7 +127,7 @@ export default function Payments() {
     }, [members]);
 
     const data = {
-        columns: memberTableColumns,
+        columns: paymentTableColumns,
         rows: membersForRender
     };
 

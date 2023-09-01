@@ -37,6 +37,14 @@ export default function Sidebar() {
                 </div> */}
 
                 {/*<-- Nav Item - Tables -->*/}
+                <li className={`nav-item ${path === "/users" ? "active" : ""}`}>
+                    <Link href="/members" className="nav-link">
+                        <i className="fas fa-fw fa-table"></i>
+                        <span>Members</span>
+                    </Link>
+                </li>
+
+                {/*<-- Nav Item - Tables -->*/}
                 <li className={`nav-item ${path === "/payments" ? "active" : ""}`}>
                     <Link href="/payments" className="nav-link">
                         <i className="fas fa-fw fa-table"></i>
@@ -45,13 +53,7 @@ export default function Sidebar() {
                 </li>
 
 
-                {/*<-- Nav Item - Tables -->*/}
-                <li className={`nav-item ${path === "/users" ? "active" : ""}`}>
-                    <Link href="/members" className="nav-link">
-                        <i className="fas fa-fw fa-table"></i>
-                        <span>Members</span>
-                    </Link>
-                </li>
+
 
 
                 {/*<-- Sidebar Toggler (Sidebar) -->*/}

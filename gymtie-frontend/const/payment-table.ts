@@ -1,4 +1,4 @@
-export const memberTableColumns = [
+export const paymentTableColumns = [
     {
         label: "Name",
         field: "name",
