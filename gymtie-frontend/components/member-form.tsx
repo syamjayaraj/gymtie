@@ -21,7 +21,7 @@ export default function MemberForm({
             country: "India",
             about: "",
             age: "",
-            pincode: "",
+            pincode: "673317",
         }
     )
     const [joiningDate, setJoiningDate] = useState(new Date())
