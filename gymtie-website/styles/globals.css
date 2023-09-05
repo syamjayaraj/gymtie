@@ -3163,9 +3163,9 @@ textarea.form-control-lg {
   opacity: 0;
 }
 
-.collapse:not(.show) {
+/* .collapse:not(.show) {
   display: none;
-}
+} */
 
 .collapsing {
   height: 0;
@@ -10833,5 +10833,5 @@ textarea.form-control-lg {
   font-size: 2rem;
 }
 .nav-link .login {
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
 }
