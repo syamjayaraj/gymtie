@@ -14,7 +14,7 @@ export default function Features() {
                         <div className="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i className="bi bi-building"></i></div>
                         <h2 className="h4 fw-bolder">Your Data, Always Securee</h2>
                         <p>
-                            Discover the power of our gym management app's cloud-based database. Say goodbye to data loss worries and access your gym's information from anywhere, anytime. Your data is safe and always at your fingertips.
+                            Discover the power of our gym management app&apos;s cloud-based database. Say goodbye to data loss worries and access your gym&apos;s information from anywhere, anytime. Your data is safe and always at your fingertips.
                         </p>
                     </div>
                     <div className="col-lg-4">

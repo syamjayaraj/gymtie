@@ -16,7 +16,7 @@ export default function Testimonial() {
                                     <div className="flex-shrink-0"><i className="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>
                                     <div className="ms-4">
                                         <p className="mb-1">Thank you for putting together such a great product. We loved working with you and the whole team, and we will be recommending you to others!</p>
-                                        <div className="small text-muted">- Sajith, (Master's Gym)</div>
+                                        <div className="small text-muted">- Sajith, (Master&apos;s Gym)</div>
                                     </div>
                                 </div>
                             </div>
