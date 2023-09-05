@@ -17,7 +17,7 @@ export default function Members() {
 
     const [members, setMembers] = useState([])
     const [memberToBeEdited, setMemberToBeEdited] = useState({})
-
+    const [loading, setLoading] = useState(false)
 
     const handleAddMemberModal = () => {
         setShowAddMemberModal(true)
@@ -79,11 +79,13 @@ export default function Members() {
 
     useEffect(() => {
         const handleListMembers = async () => {
+            setLoading(true)
             const res: any = await listMembers()
             if (res?.status === 200) {
                 setMembers(res?.data)
+                setLoading(false)
             } else {
-
+                setLoading(false)
             }
         }
         handleListMembers()
@@ -193,6 +195,7 @@ export default function Members() {
                                             striped bordered hover data={data}
                                             paging={false}
                                             noBottomColumns={true}
+                                            spinner={loading}
                                         />
                                     </div>
                                 </div>
