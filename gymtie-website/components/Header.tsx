@@ -6,7 +6,7 @@ export default function Header() {
                     <div className="col-lg-6">
                         <div className="text-center my-5">
                             <h1 className="display-5 fw-bolder text-white mb-2">Manage Your Gym Like a Pro</h1>
-                            <p className="lead text-white-50 mb-4">Experience effortless gym management with GymTie app. Explore GymTie features and elevate your fitness business to the next level!</p>
+                            <p className="lead text-white-50 mb-4">Experience effortless gym management with the GymTie app. Explore GymTie features and elevate your fitness business to the next level!</p>
                             <div className="d-grid gap-3 d-sm-flex justify-content-sm-center">
                                 <a className="btn btn-outline-light btn-lg px-4" href="#features">Explore</a>
                             </div>
