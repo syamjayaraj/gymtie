@@ -11294,3 +11294,6 @@ label {
   margin-bottom: .1rem;
   margin-left: .2rem;
 }
+.modal {
+  overflow-y:auto;
+}

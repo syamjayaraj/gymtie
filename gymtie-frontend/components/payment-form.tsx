@@ -188,7 +188,7 @@ export default function PaymentForm({
                                             className="btn btn-secondary btn-block"
                                             type="submit"
                                             disabled={isSubmitting}>
-                                            Save
+                                            {isSubmitting ? "Loading" : "Save"}
                                         </button>
                                     </div>
                                 </form>

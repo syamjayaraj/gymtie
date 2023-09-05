@@ -62,7 +62,7 @@ export default function MemberForm({
                                 if (!values.name) {
                                     errors.name = 'Required';
                                 }
-                                else if (
+                                if (values?.email &&
                                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                                 ) {
                                     errors.email = 'Invalid email address';
@@ -291,7 +291,7 @@ export default function MemberForm({
                                             className="btn btn-secondary btn-block"
                                             type="submit"
                                             disabled={isSubmitting}>
-                                            Save
+                                            {isSubmitting ? "Loading" : "Save"}
                                         </button>
                                     </div>
                                 </form>

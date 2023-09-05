@@ -193,6 +193,7 @@ export default function Members() {
                                             striped bordered hover data={data}
                                             paging={false}
                                             noBottomColumns={true}
+
                                         />
                                     </div>
                                 </div>
