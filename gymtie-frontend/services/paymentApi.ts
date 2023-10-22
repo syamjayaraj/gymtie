@@ -1,53 +1,77 @@
 export const listPayments = async () => {
-    const token = localStorage?.getItem("userToken")
-    let res = await fetch(`${process?.env?.NEXT_PUBLIC_API_URL}payments/list`, {
+  const token = localStorage?.getItem("userToken");
+  let res = await fetch(`${process?.env?.NEXT_PUBLIC_API_URL}payments/list`, {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+    method: "GET",
+  });
+  res = await res.json();
+  return res;
+};
+
+export const listPaymentsOfMember = async (memberId) => {
+  console.log(memberId, "id");
+  const token = localStorage?.getItem("userToken");
+  let res = await fetch(
+    `${process?.env?.NEXT_PUBLIC_API_URL}payments/member/${memberId}/list`,
+    {
       headers: {
         "Content-Type": "application/json",
-        "x-access-token": token
+        "x-access-token": token,
       },
-      method: "GET"
-    });
-    res = await res.json();
-    return res
+      method: "GET",
+    }
+  );
+  res = await res.json();
+  console.log(res, "res");
+  return res;
 };
 
 export const addPayment = async (params) => {
-  const token = localStorage?.getItem("userToken")
+  const token = localStorage?.getItem("userToken");
   let res = await fetch(`${process?.env?.NEXT_PUBLIC_API_URL}payments`, {
     headers: {
       "Content-Type": "application/json",
-      "x-access-token": token
+      "x-access-token": token,
     },
     method: "POST",
     body: JSON.stringify(params),
   });
   res = await res.json();
-  return res
+  return res;
 };
 
 export const updatePayment = async (params) => {
-  const token = localStorage?.getItem("userToken")
-  let res = await fetch(`${process?.env?.NEXT_PUBLIC_API_URL}payments/${params?._id}`, {
-    headers: {
-      "Content-Type": "application/json",
-      "x-access-token": token
-    },
-    method: "PUT",
-    body: JSON.stringify(params),
-  });
+  const token = localStorage?.getItem("userToken");
+  let res = await fetch(
+    `${process?.env?.NEXT_PUBLIC_API_URL}payments/${params?._id}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+      method: "PUT",
+      body: JSON.stringify(params),
+    }
+  );
   res = await res.json();
-  return res
+  return res;
 };
 
 export const deletePayment = async (memberId) => {
-    const token = localStorage?.getItem("userToken")
-    let res = await fetch(`${process?.env?.NEXT_PUBLIC_API_URL}payments/${memberId}`, {
+  const token = localStorage?.getItem("userToken");
+  let res = await fetch(
+    `${process?.env?.NEXT_PUBLIC_API_URL}payments/${memberId}`,
+    {
       headers: {
         "Content-Type": "application/json",
-        "x-access-token": token
+        "x-access-token": token,
       },
-      method: "DELETE"
-    });
-    res = await res.json();
-    return res as any
+      method: "DELETE",
+    }
+  );
+  res = await res.json();
+  return res as any;
 };

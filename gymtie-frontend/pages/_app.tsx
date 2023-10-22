@@ -1,8 +1,9 @@
 import '../styles/globals.css'
+import '../styles/timeline.css'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import AppContext from "../AppContext";

@@ -39,6 +39,7 @@ router.post("/", [jwtauth], async (req, res) => {
   }
 });
 
+// Update member details
 router.put("/:id", [jwtauth], async (req, res) => {
   try {
     let response = await editMember(req);
@@ -54,6 +55,7 @@ router.put("/:id", [jwtauth], async (req, res) => {
   }
 });
 
+// Get member details
 router.get("/:id", [jwtauth], async (req, res) => {
   try {
     let response = await getMember(req);
@@ -69,6 +71,7 @@ router.get("/:id", [jwtauth], async (req, res) => {
   }
 });
 
+// Delete member details
 router.delete("/:id", [jwtauth], async (req, res) => {
   try {
     let response = await deleteMember(req);

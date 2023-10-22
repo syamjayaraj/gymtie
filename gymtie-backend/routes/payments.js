@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   listPayment,
+  listPaymentsOfMember,
   addNewPayment,
   editPayment,
   deletePayment,
@@ -13,6 +14,20 @@ const { jwtauth } = require("../lib/jwtlib");
 router.get("/list?", [jwtauth], async (req, res) => {
   try {
     let response = await listPayment(req);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      err: err.message,
+    });
+  }
+});
+
+// List all payments of a member
+router.get("/member/:memberId/list?", [jwtauth], async (req, res) => {
+  try {
+    let response = await listPaymentsOfMember(req);
+    console.log(response, "res");
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({

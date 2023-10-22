@@ -3,31 +3,26 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { MDBDataTable } from "mdbreact";
-import { addMember, deleteMember, listMembers } from "../services/memberApi"
-import { confirmAlert } from 'react-confirm-alert';
-import MemberForm from "../components/member-form";
+import { listMembers } from "../services/memberApi"
 import { toast } from "react-toastify";
 import moment from "moment"
 import { memberTableColumns } from "../const/member-table";
 import PaymentForm from "../components/payment-form";
 import { addPayment } from "../services/paymentApi";
 import { useRouter } from "next/router";
+import Link from "next/link";
+
 export default function PayFee() {
     const router = useRouter()
     const [showAddMemberModal, setShowAddMemberModal] = useState(false)
     const [membersForRender, setMembersForRender] = useState([])
-
     const [members, setMembers] = useState([])
     const [memberToBeEdited, setMemberToBeEdited] = useState({})
 
-
     const handleEditPaymentModal = async (param) => {
-
         setMemberToBeEdited(param)
         setShowAddMemberModal(true)
     }
-
-
 
     useEffect(() => {
         const handleListMembers = async () => {
@@ -52,7 +47,24 @@ export default function PayFee() {
                 <div>{moment(item.joiningDate).format("Do MMM YYYY")}</div>
             );
             item.action = (
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ display: "flex" }}>
+                    <div
+                        className="uil-trash-alt"
+                        style={{
+                            cursor: "pointer",
+                            color: "#938af3",
+                            fontSize: ".7em",
+                            marginRight: ".5rem"
+                        }}
+                        >
+                        <Link
+                        href={`/member/${item?._id}`}
+                            className="btn btn-secondary btn-user btn-block"
+                            type="submit"
+                        >
+                            Payment history
+                        </Link>
+                    </div>
                     <div
                         className="uil-trash-alt"
                         style={{
@@ -62,7 +74,6 @@ export default function PayFee() {
                             marginRight: ".5rem"
                         }}
                         onClick={() => handleEditPaymentModal(members[index])}>
-
                         <button
                             className="btn btn-secondary btn-user btn-block"
                             type="submit"

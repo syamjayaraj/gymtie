@@ -11,7 +11,6 @@ let memberSchema = new Schema(
     memberId: {
       type: String,
       required: true,
-      unique: true,
     },
     name: {
       type: String,

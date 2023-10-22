@@ -24,6 +24,29 @@ listPayment = (req) => {
   });
 };
 
+listPaymentsOfMember = (req) => {
+  console.log("hai");
+  return new Promise(async (resolve, reject) => {
+    try {
+      let payments = await models.Payment.find({
+        isListed: true,
+        gym: req?.admin?.gym,
+        member: req?.params?.memberId,
+      }).sort({ _id: -1 });
+      console.log(payments, "payments");
+      resolve({
+        status: 200,
+        data: payments,
+      });
+    } catch (err) {
+      reject({
+        status: 200,
+        message: err.message,
+      });
+    }
+  });
+};
+
 addNewPayment = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -109,6 +132,7 @@ deletePayment = (req) => {
 module.exports = {
   getPayment,
   listPayment,
+  listPaymentsOfMember,
   addNewPayment,
   editPayment,
   deletePayment,

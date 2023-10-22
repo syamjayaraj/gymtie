@@ -29,7 +29,9 @@ addNewMember = (req) => {
       let member = new models.Member();
       member = _.merge(member, _.pick(req.body, models.Member.fillable));
       member.gym = req?.admin?.gym;
-      const numberOfMembers = await models?.Member?.countDocuments();
+      const numberOfMembers = await models?.Member?.find({
+        gym: req?.admin?.gym,
+      }).countDocuments();
       member.memberId = generateMemberId(numberOfMembers);
 
       member = await member.save();

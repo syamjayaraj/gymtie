@@ -14,6 +14,7 @@ const env = process.env.NODE_ENV || "development";
 const config = require("./config")[env];
 
 const index = require("./routes");
+const dashboard = require("./routes/dashboard");
 const admins = require("./routes/admins");
 const owners = require("./routes/owners");
 const gyms = require("./routes/gyms");
@@ -39,6 +40,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/", index);
+app.use("/dashboard", dashboard);
 app.use("/admins", admins);
 app.use("/owners", owners);
 app.use("/gyms", gyms);
