@@ -105,75 +105,83 @@ export default function Profile() {
                           <h4 id="timeline">Fee payment history</h4>
                         </div>
                         <ul className="timeline">
-                          {monthsFromJoingDate?.map((monthYear) => {
-                            const payments = filterPaymentsByMonth(monthYear);
-                            if (payments?.length > 0) {
-                              return (
-                                <li className="timeline-inverted">
-                                  <div className="timeline-badge success">
-                                    <i className="bi bi-check-lg"></i>
-                                    <p className="month">{monthYear}</p>
-                                  </div>
-                                  <div className="timeline-panel">
-                                    {payments?.map((payment, index) => {
-                                      return (
-                                        <>
-                                          <div
-                                            className="timeline-heading"
-                                            key={"payment" + index}
-                                          >
-                                            <h4 className="timeline-title">
-                                              ₹ {payment?.amount}
-                                            </h4>
-                                            <span className="badge badge-pill badge-light">
-                                              {moment(
-                                                payment?.paymentDate
-                                              ).format("Do MMM yyyy")}
-                                            </span>
-                                          </div>
-                                          <div className="timeline-body mt-2">
-                                            <p>
-                                              <span className="text-muted">
-                                                Note:{" "}
-                                              </span>
-                                              {payment?.note}
-                                            </p>
-                                          </div>
-                                          {index !== payments?.length - 1 && (
-                                            <hr />
-                                          )}
-                                        </>
-                                      );
-                                    })}
-                                  </div>
-                                </li>
-                              );
-                            } else
-                              return (
-                                <li className="timeline-inverted">
-                                  <div className="timeline-badge danger">
-                                    <i className="bi bi-x-lg"></i>
-                                    <p className="month">{monthYear}</p>
-                                  </div>
-                                  <div className="timeline-panel">
-                                    <div className="timeline-heading">
-                                      <h4 className="timeline-title">₹ 600</h4>
-                                      <span className="badge badge-pill badge-light">
-                                        Pending
-                                      </span>
+                          {monthsFromJoingDate?.map(
+                            (monthYear, monthYearIndex) => {
+                              const payments = filterPaymentsByMonth(monthYear);
+                              if (payments?.length > 0) {
+                                return (
+                                  <li
+                                    className="timeline-inverted"
+                                    key={"monthYear" + monthYearIndex}
+                                  >
+                                    <div className="timeline-badge success">
+                                      <i className="bi bi-check-lg"></i>
+                                      <p className="month">{monthYear}</p>
                                     </div>
-                                    <div className="timeline-body mt-2">
-                                      <p>
-                                        <span className="text-muted">
-                                          Note:{" "}
+                                    <div className="timeline-panel">
+                                      {payments?.map(
+                                        (payment, paymentIndex) => {
+                                          return (
+                                            <>
+                                              <div
+                                                className="timeline-heading"
+                                                key={"payment" + paymentIndex}
+                                              >
+                                                <h4 className="timeline-title">
+                                                  ₹ {payment?.amount}
+                                                </h4>
+                                                <span className="badge badge-pill badge-light">
+                                                  {moment(
+                                                    payment?.paymentDate
+                                                  ).format("Do MMM yyyy")}
+                                                </span>
+                                              </div>
+                                              <div className="timeline-body mt-2">
+                                                <p>
+                                                  <span className="text-muted">
+                                                    Note:{" "}
+                                                  </span>
+                                                  {payment?.note}
+                                                </p>
+                                              </div>
+                                              {paymentIndex !==
+                                                payments?.length - 1 && <hr />}
+                                            </>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+                                  </li>
+                                );
+                              } else
+                                return (
+                                  <li className="timeline-inverted">
+                                    <div className="timeline-badge danger">
+                                      <i className="bi bi-x-lg"></i>
+                                      <p className="month">{monthYear}</p>
+                                    </div>
+                                    <div className="timeline-panel">
+                                      <div className="timeline-heading">
+                                        <h4 className="timeline-title">
+                                          ₹ 600
+                                        </h4>
+                                        <span className="badge badge-pill badge-light">
+                                          Pending
                                         </span>
-                                        test
-                                      </p>
+                                      </div>
+                                      <div className="timeline-body mt-2">
+                                        <p>
+                                          <span className="text-muted">
+                                            Note:{" "}
+                                          </span>
+                                          test
+                                        </p>
+                                      </div>
                                     </div>
-                                  </div>
-                                </li>
-                              );
-                          })}
+                                  </li>
+                                );
+                            }
+                          )}
                         </ul>
                       </div>
                     </div>
