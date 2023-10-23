@@ -44,7 +44,7 @@ export default function Dashboard() {
   return (
     <div id="page-top">
       <div id="wrapper">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Navbar />

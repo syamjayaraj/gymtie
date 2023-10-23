@@ -65,7 +65,7 @@ export default function Profile() {
   return (
     <>
       <div id="wrapper">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Navbar />
@@ -79,7 +79,7 @@ export default function Profile() {
                     alignItems: "center",
                   }}
                 >
-                  <h1 className="h3 mb-2 text-gray-800">Profile</h1>
+                  <h1 className="h4 mb-2 text-gray-800">Profile</h1>
                 </div>
                 <div className="card shadow mb-4">
                   <div className="card-body">

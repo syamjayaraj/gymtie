@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-import Footer from "../components/footer";
-import Navbar from "../components/navbar";
-import Sidebar from "../components/sidebar";
+import Footer from "../../components/footer";
+import Navbar from "../../components/navbar";
+import Sidebar from "../../components/sidebar";
 import { MDBDataTable } from "mdbreact";
 import {
   addMember,
   deleteMember,
   listMembers,
   updateMember,
-} from "../services/memberApi";
+} from "../../services/memberApi";
 import { confirmAlert } from "react-confirm-alert";
-import MemberForm from "../components/member-form";
+import MemberForm from "../../components/member-form";
 import { toast } from "react-toastify";
 import moment from "moment";
-import { memberTableSettingsColumns } from "../const/member-table";
+import { memberTableSettingsColumns } from "../../const/member-table";
+import Loader from "../../components/loader";
 
 export default function Members() {
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
@@ -21,7 +22,7 @@ export default function Members() {
 
   const [members, setMembers] = useState([]);
   const [memberToBeEdited, setMemberToBeEdited] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleAddMemberModal = () => {
     setShowAddMemberModal(true);
@@ -83,7 +84,6 @@ export default function Members() {
 
   useEffect(() => {
     const handleListMembers = async () => {
-      setLoading(true);
       const res: any = await listMembers();
       if (res?.status === 200) {
         setMembers(res?.data);
@@ -162,7 +162,6 @@ export default function Members() {
   return (
     <>
       <div id="wrapper">
-        <Sidebar />
         <MemberForm
           showModal={showAddMemberModal}
           setShowModal={setShowAddMemberModal}
@@ -181,7 +180,7 @@ export default function Members() {
                   alignItems: "center",
                 }}
               >
-                <h1 className="h3 mb-2 text-gray-800">Members</h1>
+                <h1 className="h4 mb-2 text-gray-800">Members</h1>
                 <div className="">
                   <button
                     type="button"
@@ -199,21 +198,24 @@ export default function Members() {
                   </button>
                 </div>
               </div>
-              <div className="card shadow mb-4">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <MDBDataTable
-                      striped
-                      bordered
-                      hover
-                      data={data}
-                      paging={false}
-                      noBottomColumns={true}
-                      spinner={loading}
-                    />
+              {loading && <Loader />}
+              {!loading && (
+                <div className="card shadow mb-4">
+                  <div className="card-body">
+                    <div className="table-responsive">
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={data}
+                        paging={false}
+                        noBottomColumns={true}
+                        spinner={loading}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           <Footer />
