@@ -11804,10 +11804,10 @@ body {
 .topbar.navbar-light .navbar-nav .nav-item .nav-link:hover {
   color: #373131;
 }
-.topbar.navbar-light .navbar-nav .nav-item .nav-link:active {
+/* .topbar.navbar-light .navbar-nav .nav-item .nav-link:active {
   font-size: 1.5em !important;
   color: #373131;
-}
+} */
 #content {
   min-height: 50vh;
 }

@@ -30,7 +30,10 @@ export default function Navbar() {
             <div className="name-container">
               <div className="gym-name">New Wings Health Club</div>
               <div className="powered-by">
-                Powered by <a href="https://gymtie.com">GymTie</a>
+                Powered by{" "}
+                <a href="https://gymtie.com" target="_blank">
+                  GymTie
+                </a>
               </div>
             </div>
           </div>
