@@ -148,15 +148,22 @@
   margin-top: 5px;
 }
 
+.timeline .month {
+  color: #8f92a0;
+  margin-top: -0.6rem;
+  font-size: 0.6em;
+  text-wrap: nowrap;
+}
+
 @media (max-width: 767px) {
   ul.timeline:before {
     left: 40px;
   }
 
   ul.timeline > li > .timeline-panel {
-    width: calc(100% - 90px);
-    width: -moz-calc(100% - 90px);
-    width: -webkit-calc(100% - 90px);
+    width: calc(100% - 200px);
+    width: -moz-calc(100% - 200px);
+    width: -webkit-calc(100% - 200px);
   }
 
   ul.timeline > li > .timeline-badge {
@@ -182,10 +189,36 @@
     left: -14px;
     right: auto;
   }
+  .container {
+    padding-left: 0rem;
+    padding-right: 0rem;
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+  .timeline > li > .timeline-badge {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .timeline .month {
+    margin-top: -0.2rem;
+  }
 }
-.timeline .month {
-  color: #8f92a0;
-  margin-top: -0.6rem;
-  font-size: 0.6em;
-  text-wrap: nowrap;
+
+@media (max-width: 480px) {
+  ul.timeline > li > .timeline-panel {
+    width: calc(90%);
+    width: -moz-calc(90%);
+    width: -webkit-calc(90%);
+  }
+  .timeline {
+    margin-left: -3rem;
+  }
+  .container-fluid {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .timeline > li.timeline-inverted > .timeline-panel {
+    margin-left: 4rem;
+  }
 }

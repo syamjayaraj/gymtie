@@ -11787,9 +11787,13 @@ body {
   background-color: white !important;
   background: white !important;
 }
+/* Mobile View */
 @media only screen and (max-width: 876px) {
   .container-fluid {
     max-width: 100%;
+  }
+  .name-container {
+    display: none;
   }
 }
 
@@ -11844,4 +11848,28 @@ body {
   .button-67 {
     padding: 24px;
   }
+}
+.logo {
+  width: 60px;
+  height: auto;
+}
+.nav-left-container {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+.name-container {
+  cursor: default;
+}
+.name-container .gym-name {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.name-container .powered-by {
+  font-size: 0.7em;
+  margin-top: -0.2rem;
+}
+a:hover {
+  text-decoration: none;
 }
