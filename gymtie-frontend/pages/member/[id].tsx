@@ -15,6 +15,7 @@ export default function Profile() {
   const [member, setMember] = useState<IMemberDetails>();
   const [memberPayments, setMemberPayments] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [monthsFromJoingDate, setMonthsFromJoiningDate] = useState<any>([]);
 
   useEffect(() => {
     if (router?.query?.id) {
@@ -26,7 +27,7 @@ export default function Profile() {
         );
         if (memberResponse?.status === 200 && paymentResponse?.status === 200) {
           setMember(memberResponse?.data?.data);
-          setMemberPayments(paymentResponse?.data);
+          setMemberPayments(paymentResponse?.data?.reverse());
           setLoading(false);
         } else {
           setLoading(false);
@@ -36,7 +37,30 @@ export default function Profile() {
     }
   }, [router?.query?.id]);
 
-  console.log(member, "lroem");
+  useEffect(() => {
+    if (member?.joiningDate) {
+      const monthsFromJoingDateVar = [];
+      const startDate = moment(member?.joiningDate, "YYYY-MM-DD");
+      const currentDate = moment();
+      let currentDateIter = startDate.clone();
+
+      while (
+        currentDateIter.isBefore(currentDate) ||
+        currentDateIter.isSame(currentDate, "month")
+      ) {
+        monthsFromJoingDateVar?.push(currentDateIter.format("MMM YYYY"));
+        currentDateIter.add(1, "months");
+      }
+      setMonthsFromJoiningDate(monthsFromJoingDateVar?.reverse());
+    }
+  }, [member]);
+
+  const filterPaymentsByMonth = (targetMonth) => {
+    return memberPayments.filter((payment) => {
+      const paymentMonthYear = moment(payment?.paymentDate).format("MMM YYYY");
+      return paymentMonthYear === targetMonth;
+    });
+  };
 
   return (
     <>
@@ -81,35 +105,74 @@ export default function Profile() {
                           <h4 id="timeline">Fee payment history</h4>
                         </div>
                         <ul className="timeline">
-                          {memberPayments?.map((paymentItem, index) => {
-                            return (
-                              <li
-                                className="timeline-inverted"
-                                key={"payment-item" + index}
-                              >
-                                <div className="timeline-badge default">
-                                  <i className="glyphicon glyphicon-credit-card"></i>
-                                </div>
-                                <div className="timeline-panel">
-                                  <div className="timeline-heading">
-                                    <h4 className="timeline-title">
-                                      ₹ {paymentItem?.amount}
-                                    </h4>
-                                    <span className="badge badge-pill badge-light">
-                                      {moment(paymentItem?.paymentDate).format(
-                                        "Do MMM yyyy"
-                                      )}
-                                    </span>
+                          {monthsFromJoingDate?.map((monthYear) => {
+                            const payments = filterPaymentsByMonth(monthYear);
+                            if (payments?.length > 0) {
+                              return (
+                                <li className="timeline-inverted">
+                                  <div className="timeline-badge success">
+                                    <i className="bi bi-check-lg"></i>
+                                    <p className="month">{monthYear}</p>
                                   </div>
-                                  <div className="timeline-body mt-2">
-                                    <p>
-                                      <span className="text-muted">Note: </span>
-                                      {paymentItem?.note}
-                                    </p>
+                                  <div className="timeline-panel">
+                                    {payments?.map((payment, index) => {
+                                      return (
+                                        <>
+                                          <div
+                                            className="timeline-heading"
+                                            key={"payment" + index}
+                                          >
+                                            <h4 className="timeline-title">
+                                              ₹ {payment?.amount}
+                                            </h4>
+                                            <span className="badge badge-pill badge-light">
+                                              {moment(
+                                                payment?.paymentDate
+                                              ).format("Do MMM yyyy")}
+                                            </span>
+                                          </div>
+                                          <div className="timeline-body mt-2">
+                                            <p>
+                                              <span className="text-muted">
+                                                Note:{" "}
+                                              </span>
+                                              {payment?.note}
+                                            </p>
+                                          </div>
+                                          {index !== payments?.length - 1 && (
+                                            <hr />
+                                          )}
+                                        </>
+                                      );
+                                    })}
                                   </div>
-                                </div>
-                              </li>
-                            );
+                                </li>
+                              );
+                            } else
+                              return (
+                                <li className="timeline-inverted">
+                                  <div className="timeline-badge danger">
+                                    <i className="bi bi-x-lg"></i>
+                                    <p className="month">{monthYear}</p>
+                                  </div>
+                                  <div className="timeline-panel">
+                                    <div className="timeline-heading">
+                                      <h4 className="timeline-title">₹ 600</h4>
+                                      <span className="badge badge-pill badge-light">
+                                        Pending
+                                      </span>
+                                    </div>
+                                    <div className="timeline-body mt-2">
+                                      <p>
+                                        <span className="text-muted">
+                                          Note:{" "}
+                                        </span>
+                                        test
+                                      </p>
+                                    </div>
+                                  </div>
+                                </li>
+                              );
                           })}
                         </ul>
                       </div>

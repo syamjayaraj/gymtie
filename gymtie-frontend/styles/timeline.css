@@ -183,3 +183,9 @@
     right: auto;
   }
 }
+.timeline .month {
+  color: #8f92a0;
+  margin-top: -0.6rem;
+  font-size: 0.6em;
+  text-wrap: nowrap;
+}
