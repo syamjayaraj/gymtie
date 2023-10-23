@@ -11782,6 +11782,7 @@ body {
   width: 100%;
   background-color: red;
   text-align: center;
+  z-index: 100;
 }
 #wrapper #content-wrapper {
   background-color: white !important;
