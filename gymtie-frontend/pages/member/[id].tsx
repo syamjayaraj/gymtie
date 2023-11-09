@@ -153,7 +153,7 @@ export default function Profile() {
                                     </div>
                                   </li>
                                 );
-                              } else
+                              } else {
                                 return (
                                   <li className="timeline-inverted">
                                     <div className="timeline-badge danger">
@@ -162,9 +162,7 @@ export default function Profile() {
                                     </div>
                                     <div className="timeline-panel">
                                       <div className="timeline-heading">
-                                        <h4 className="timeline-title">
-                                          ₹ 600
-                                        </h4>
+                                        <h4 className="timeline-title">₹ 0</h4>
                                         <span className="badge badge-pill badge-light">
                                           Pending
                                         </span>
@@ -174,12 +172,21 @@ export default function Profile() {
                                           <span className="text-muted">
                                             Note:{" "}
                                           </span>
-                                          test
+                                          Leave
                                         </p>
+                                      </div>
+                                      <div className="timeline-body mt-2">
+                                        <span
+                                          className="badge badge-light cursor-pointer"
+                                          onClick={() => markAsLeave()}
+                                        >
+                                          Mark as Leave
+                                        </span>
                                       </div>
                                     </div>
                                   </li>
                                 );
+                              }
                             }
                           )}
                         </ul>

@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const cron = require("node-cron");
 
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
@@ -34,6 +35,16 @@ var options = {
 
 mongoose.connect(dbUrl, options, (err) => {
   if (err) console.log(err);
+});
+
+// Cron job which runs on every 10 second
+// cron.schedule("*/10 * * * * *", function () {
+//   console.log("running a task every 10 second");
+// });
+
+// Cron job which runs on every day midnight
+cron.schedule("0 0 0 * * *", function () {
+  console.log("running a task every 10 second");
 });
 
 app.use(cors());

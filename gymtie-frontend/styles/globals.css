@@ -11874,3 +11874,6 @@ body {
 a:hover {
   text-decoration: none;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
