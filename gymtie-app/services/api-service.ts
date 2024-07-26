@@ -30,8 +30,8 @@ export const postLogin = createAsyncThunk(
   }
 );
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
+export const fetchMembers = createAsyncThunk(
+  "products/fetchMembers",
   async () => {
     const response = await axios.get(
       "https://api.youngmenu.com/api/items?populate=*"

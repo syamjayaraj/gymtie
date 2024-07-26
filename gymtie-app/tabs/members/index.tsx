@@ -1,11 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Landing from "./landing";
+import MemberDetailsComponent from "./member-details";
 import PageTitle from "../../components/title/page-title";
 
 const Stack = createStackNavigator();
 
-function HomeComponent(props: any) {
+function MembersComponent(props: any) {
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -24,15 +25,24 @@ function HomeComponent(props: any) {
       }}
     >
       <Stack.Screen
-        name="Dashboard"
+        name="Members"
         component={Landing}
         options={{
           headerShown: true,
-          headerTitle: (props: any) => <PageTitle title="Dashboard" />,
+          headerTitle: (props: any) => <PageTitle title="Members" />,
+        }}
+      />
+      <Stack.Screen
+        name="MemberDetails"
+        component={MemberDetailsComponent}
+        options={{
+          headerShown: true,
+          headerTitle: (props: any) => <PageTitle title="MemberDetails" />,
+          gestureDirection: "horizontal",
         }}
       />
     </Stack.Navigator>
   );
 }
 
-export default HomeComponent;
+export default MembersComponent;

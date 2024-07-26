@@ -5,10 +5,10 @@ import PageTitle from "../../components/title/page-title";
 
 const Stack = createStackNavigator();
 
-function HomeComponent(props: any) {
+const PaymentsComponent = (props: any) => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Payments"
       screenOptions={{
         headerShown: false,
         headerStyle: {
@@ -24,15 +24,15 @@ function HomeComponent(props: any) {
       }}
     >
       <Stack.Screen
-        name="Dashboard"
+        name="Payments"
         component={Landing}
         options={{
-          headerShown: true,
-          headerTitle: (props: any) => <PageTitle title="Dashboard" />,
+          headerShown: false,
+          headerTitle: (props: any) => <PageTitle title="Payments" />,
         }}
       />
     </Stack.Navigator>
   );
-}
+};
 
-export default HomeComponent;
+export default PaymentsComponent;

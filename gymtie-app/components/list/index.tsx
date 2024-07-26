@@ -1,0 +1,161 @@
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, SafeAreaView } from "react-native";
+import { Box, Spinner } from "native-base";
+import SearchBar from "../common/search-bar";
+import CategoryList from "../common/category-list";
+import ItemList from "../common/item-list";
+
+export default function ListComponent(props: any) {
+  const [categories, setCategories] = useState<any>([]);
+  const [selectedCategory, setSelectedCategory] = useState<
+    number | undefined
+  >();
+  const [searchText, setSearchText] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [items, setItems] = useState<any>([]);
+  const [pagination, setPagination] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [categoryLoading, setCategoryLoading] = useState<boolean>(false);
+  const [initialLoading, setInitialLoading] = useState<boolean>(false);
+
+  const type = props.route.params.type;
+  const typeCategory = props.route.params.typeCategory;
+  const typeCategoryUrl = props.route.params.typeCategoryUrl;
+  const typeCategoryLabel = props.route.params.typeCategoryLabel;
+  const extra = props.route.params.extra;
+
+  let filters: any = [];
+  let fields = ["name", "nameMalayalam", "phoneNumber"];
+  let sort = ["name"];
+  if (type === "businesses") {
+    filters = [
+      {
+        name: "small",
+        value: extra === "small" ? true : false,
+      },
+    ];
+  }
+  if (type === "bus-timings") {
+    fields = [...fields, "time"];
+    sort = ["time"];
+  }
+  let params = {
+    type: type,
+    filters: filters,
+    fields: fields,
+    sort: sort,
+    populate: [typeCategory],
+    categoryType: typeCategory,
+    categoryId: selectedCategory,
+    searchText: searchText,
+    pageNumber: pageNumber,
+  };
+
+  const handleSearch = (param: string) => {
+    setSearchText(param);
+  };
+
+  const handleSelectCategory = (categoryId: number) => {
+    if (categoryId === selectedCategory) {
+      setSelectedCategory(undefined);
+    } else {
+      setSelectedCategory(categoryId);
+    }
+  };
+
+  const handleSelectItem = (itemId: string) => {};
+
+  useEffect(() => {
+    loadItemCategoryFromApi();
+  }, []);
+
+  const loadItemCategoryFromApi = async () => {};
+
+  const loadItems = async (pageParam?: number) => {};
+
+  const handleLoadMore = (): Promise<void> => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if ((pagination?.pagination?.total as number) < items?.length) {
+          resolve();
+          return;
+        }
+
+        const nextPageNumber = pageNumber + 1;
+        await loadItems(nextPageNumber);
+        setPageNumber(nextPageNumber);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  const handleLoadOld = (): Promise<void> => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        resolve();
+        return;
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  const loadItemFromApi = async (pageNumberParam: number) => {};
+
+  useEffect(() => {
+    loadItemFromApi(1);
+  }, [type, typeCategory, selectedCategory, searchText]);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View>
+        <SearchBar onSearchData={handleSearch} categories={categories} />
+        {categoryLoading ? (
+          <View
+            style={{
+              height: 78,
+            }}
+          ></View>
+        ) : (
+          <CategoryList
+            data={categories}
+            onClick={handleSelectCategory}
+            selectedCategory={selectedCategory}
+          />
+        )}
+      </View>
+      <View style={styles.sectionContainer}>
+        {initialLoading ? (
+          <View>
+            <Spinner color="#2b2b2b" style={styles.loader} />
+          </View>
+        ) : (
+          <ItemList
+            handleLoadMore={handleLoadMore}
+            handleLoadOld={handleLoadOld}
+            loading={loading}
+            data={items}
+            onClick={handleSelectItem}
+            props={props}
+          />
+        )}
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  loader: {
+    marginTop: 50,
+    marginBottom: 100,
+  },
+  sectionContainer: {
+    flex: 1,
+    marginTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 50,
+  },
+});

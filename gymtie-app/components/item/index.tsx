@@ -1,55 +1,67 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Box, HStack, Spacer, Text, VStack } from "native-base";
+import { Avatar, Box, HStack, Spacer, Text, VStack } from "native-base";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import callToTheNumber from "../../../utils/call-to-number";
+import callToTheNumber from "../../utils/call-to-number";
 import React from "react";
+import generateImageUrl from "../../utils/generate-image-url";
+import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
-const ItemComponent = React.memo(
-  ({ item, props, mainProp, type, typeCategory, index }: any) => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          props?.navigation?.navigate(mainProp, {
-            itemId: item.id,
-            type: type,
-            // typeCategory: typeCategory,
-          })
-        }
-        style={styles.item}
-        key={index}
-      >
-        <Box>
-          <HStack space={[3, 3]} justifyContent="space-between">
-            <VStack>
-              <Text bold>
-                {item?.attributes?.nameMalayalam ?? item?.attributes?.name}
-              </Text>
+const ItemComponent = React.memo(({ item, index }: any) => {
+  const navigation: any = useNavigation();
+  return (
+    <TouchableOpacity
+      onPress={() => navigation?.navigate("MemberDetails", { id: item?.id })}
+      style={styles.item}
+      key={index}
+    >
+      <Box>
+        <HStack space={[3, 3]} justifyContent="space-between">
+          <Avatar
+            size="48px"
+            source={{
+              uri: generateImageUrl(
+                item?.attributes?.image?.data?.attributes?.url
+              ),
+            }}
+          />
+          <VStack>
+            <HStack>
               <Text
-                color="coolGray.600"
+                color="coolGray.800"
                 _dark={{
                   color: "warmGray.200",
                 }}
-                fontSize={12}
+                fontSize={14}
+                marginTop={0.4}
+                marginRight={1}
               >
-                {item?.attributes[typeCategory]?.data?.attributes
-                  ?.nameMalayalam ??
-                  item?.attributes[typeCategory]?.data?.attributes?.name}{" "}
+                {item?.attributes?.memberId}
               </Text>
-            </VStack>
-            <Spacer />
-            <TouchableOpacity
-              onPress={() =>
-                callToTheNumber(item?.attributes?.phoneNumber, true)
-              }
+              <Text bold>{item?.attributes?.name}</Text>
+            </HStack>
+            <Text
+              color="coolGray.600"
+              _dark={{
+                color: "warmGray.200",
+              }}
+              fontSize={12}
+              marginTop={0.5}
             >
-              <Ionicons name="call-outline" size={20} color="#2b2b2b" />
-            </TouchableOpacity>
-          </HStack>
-        </Box>
-      </TouchableOpacity>
-    );
-  }
-);
+              {moment(item?.attributes?.joiningDate).format("Do MMMM YYYY")}
+            </Text>
+          </VStack>
+          <Spacer />
+          <TouchableOpacity
+            onPress={() => callToTheNumber(item?.attributes?.phoneNumber, true)}
+          >
+            <Ionicons name="arrow-forward" size={20} color="#2b2b2b" />
+          </TouchableOpacity>
+        </HStack>
+      </Box>
+    </TouchableOpacity>
+  );
+});
 
 export default ItemComponent;
 

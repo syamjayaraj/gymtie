@@ -15,86 +15,49 @@ import {
   VStack,
   Spacer,
   FlatList,
+  AlertDialog,
+  Button,
 } from "native-base";
-import { Ionicons, EvilIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import appJson from "../../app.json";
 import { fetchContent } from "../../apiService";
+import { useDispatch } from "react-redux";
+import { clearToken } from "../../reducers/authReducer";
 
 export default function Landing(props: any) {
-  const [content, setContent] = useState<any>({});
-  const [loading, setLoading] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirm] = React.useState(false);
+
+  const onClose = () => setLogoutConfirm(false);
+  const dispatch = useDispatch();
 
   const listData = [
     {
-      id: 1,
-      title: "സഹായം",
-      page: "Help",
-      icon: <Ionicons name="help-circle-outline" size={24} color="#2b2b2b" />,
-    },
-    {
       id: 2,
-      title: "ഞങ്ങളുമായി ബന്ധപ്പെടൂ",
+      title: "Contact",
       page: "Contact",
       icon: <Ionicons name="call-outline" size={24} color="#2b2b2b" />,
     },
     {
       id: 3,
-      title: "ആപ്പിനെക്കുറിച്ച്‌",
-      page: "About",
+      title: "App Info",
+      page: "AppInfo",
       icon: (
         <Ionicons name="information-circle-outline" size={24} color="#2b2b2b" />
       ),
     },
     {
-      id: 4,
-      title: "സംഭാവകർ",
-      page: "Contributors",
-      icon: <Ionicons name="people-outline" size={24} color="#2b2b2b" />,
-    },
-    {
       id: 5,
-      title: "ഉപാധികളും നിബന്ധനകളും",
+      title: "Terms and Conditions",
       page: "Terms",
       icon: <Ionicons name="documents-outline" size={24} color="#2b2b2b" />,
     },
   ];
 
-  useEffect(() => {
-    fetchContentFromApi();
-  }, []);
+  const cancelRef = React.useRef(null);
 
-  const fetchContentFromApi = async () => {
-    try {
-      setLoading(true);
-      const response: any = await fetchContent("setting");
-      if (response && response?.data) {
-        setContent(response?.data);
-      } else {
-      }
-      setLoading(false);
-    } catch (err: any) {
-      setLoading(false);
-    }
-  };
-
-  let shareAppUrl = async () => {
-    try {
-      let appUrl =
-        Platform.OS === "ios" ? content?.appUrlIos : content?.appUrlAndroid;
-      const result = await Share.share({
-        title: "പറമ്പത്ത് ആപ്പ്",
-        message: content?.shareUrlMessage + appUrl,
-        url: appUrl,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-        } else {
-        }
-      } else if (result.action === Share.dismissedAction) {
-      }
-    } catch (error: any) {
-      alert(error.message);
-    }
+  const logoutUser = () => {
+    dispatch(clearToken());
+    props?.navigation.replace("Auth");
   };
 
   return (
@@ -129,28 +92,60 @@ export default function Landing(props: any) {
               )}
               keyExtractor={(item: any) => item?.id}
             />
+
+            <Box
+              _dark={{
+                borderColor: "muted.50",
+              }}
+              borderColor="muted.800"
+              pl={["0", "4"]}
+              pr={["0", "5"]}
+              py="2"
+            >
+              <HStack space={[0, 3]} justifyContent="space-between">
+                <Ionicons name="log-out-outline" size={24} color="#2b2b2b" />
+                <VStack>
+                  <TouchableOpacity
+                    onPress={() => setLogoutConfirm(!logoutConfirmOpen)}
+                  >
+                    <Text style={{ marginLeft: 10 }}>Logout</Text>
+                  </TouchableOpacity>
+                </VStack>
+                <Spacer />
+              </HStack>
+
+              <AlertDialog
+                leastDestructiveRef={cancelRef}
+                isOpen={logoutConfirmOpen}
+                onClose={onClose}
+                width={240}
+                marginLeft={"19%"}
+              >
+                <AlertDialog.Content>
+                  <AlertDialog.Body>
+                    <Button.Group>
+                      <Button
+                        variant="unstyled"
+                        colorScheme="coolGray"
+                        onPress={onClose}
+                        ref={cancelRef}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="link"
+                        colorScheme={"secondary"}
+                        onPress={logoutUser}
+                      >
+                        Logout
+                      </Button>
+                    </Button.Group>
+                  </AlertDialog.Body>
+                </AlertDialog.Content>
+              </AlertDialog>
+            </Box>
           </Box>
 
-          {content?.shareUrlMessage ? (
-            <TouchableOpacity
-              onPress={shareAppUrl}
-              style={{
-                marginTop: 30,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: "#f1f1f1",
-                padding: 10,
-              }}
-            >
-              <EvilIcons name="share-apple" color="#2b2b2b" size={20} />
-              <Text style={{ marginLeft: 5, fontSize: 13 }}>
-                സുഹൃത്തുക്കളെ ആപ്പിലേക്ക് സ്വാഗതം ചെയ്യൂ
-              </Text>
-            </TouchableOpacity>
-          ) : null}
           <Text
             style={{
               marginTop: 30,

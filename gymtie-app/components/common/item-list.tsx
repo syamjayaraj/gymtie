@@ -27,87 +27,34 @@ export default function ItemList({
 
   return (
     <View>
-      {type === "bus-timings" && (
-        <>
-          {/* <View style={styles.item}>
-            <Box>
-              <HStack space={[3, 3]} justifyContent="space-between">
-                <VStack></VStack>
-                <Spacer />
-                <View>
-                  <Text
-                    color="coolGray.600"
-                    _dark={{
-                      color: "warmGray.200",
-                    }}
-                    fontSize={12}
-                    style={styles.parambath}
-                  >
-                    പറമ്പത്ത് സ്റ്റോപ്പ്
-                  </Text>
-                </View>
-              </HStack>
-            </Box>
-          </View> */}
-          <FlatList
-            initialNumToRender={20}
-            data={data}
-            keyExtractor={(item: any) => item?.id?.toString()}
-            onStartReached={handleLoadOld}
-            onEndReached={handleLoadMore}
-            showDefaultLoadingIndicators={true}
-            onStartReachedThreshold={10}
-            onEndReachedThreshold={10}
-            activityIndicatorColor={"#2b2b2b"}
-            HeaderLoadingIndicator={() =>
-              loading ? <Spinner color="#2b2b2b" style={styles.loader} /> : null
-            }
-            FooterLoadingIndicator={() =>
-              loading ? <Spinner color="#2b2b2b" style={styles.loader} /> : null
-            }
-            enableAutoscrollToTop={false}
-            renderItem={({ item, index }) => (
-              <ItemBusTimingComponent
-                item={item}
-                typeCategory={typeCategory}
-                index={index}
-              />
-            )}
+      <FlatList
+        initialNumToRender={20}
+        data={data}
+        keyExtractor={(item: any) => item?.id?.toString()}
+        onStartReached={handleLoadOld}
+        onEndReached={handleLoadMore}
+        showDefaultLoadingIndicators={true}
+        onStartReachedThreshold={10}
+        onEndReachedThreshold={10}
+        activityIndicatorColor={"#2b2b2b"}
+        HeaderLoadingIndicator={() =>
+          loading ? <Spinner color="#2b2b2b" style={styles.loader} /> : null
+        }
+        FooterLoadingIndicator={() =>
+          loading ? <Spinner color="#2b2b2b" style={styles.loader} /> : null
+        }
+        enableAutoscrollToTop={false}
+        renderItem={({ item, index }) => (
+          <ItemComponent
+            item={item}
+            props={props}
+            mainProp={mainProp}
+            type={type}
+            typeCategory={typeCategory}
+            index={index}
           />
-        </>
-      )}
-      {type !== "bus-timings" && (
-        <>
-          <FlatList
-            initialNumToRender={20}
-            data={data}
-            keyExtractor={(item: any) => item?.id?.toString()}
-            onStartReached={handleLoadOld}
-            onEndReached={handleLoadMore}
-            showDefaultLoadingIndicators={true}
-            onStartReachedThreshold={10}
-            onEndReachedThreshold={10}
-            activityIndicatorColor={"#2b2b2b"}
-            HeaderLoadingIndicator={() =>
-              loading ? <Spinner color="#2b2b2b" style={styles.loader} /> : null
-            }
-            FooterLoadingIndicator={() =>
-              loading ? <Spinner color="#2b2b2b" style={styles.loader} /> : null
-            }
-            enableAutoscrollToTop={false}
-            renderItem={({ item, index }) => (
-              <ItemComponent
-                item={item}
-                props={props}
-                mainProp={mainProp}
-                type={type}
-                typeCategory={typeCategory}
-                index={index}
-              />
-            )}
-          />
-        </>
-      )}
+        )}
+      />
     </View>
   );
 }

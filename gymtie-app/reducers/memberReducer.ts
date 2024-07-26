@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "../services/api-service";
+import { fetchMembers } from "../services/api-service";
 import { IProduct } from "../models/model";
 
 export interface IInitialState {
@@ -8,8 +8,8 @@ export interface IInitialState {
   error: string | null;
 }
 
-const productsSlice = createSlice({
-  name: "products",
+const membersSlice = createSlice({
+  name: "members",
   initialState: {
     items: [],
     status: "idle",
@@ -18,18 +18,18 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state: IInitialState) => {
+      .addCase(fetchMembers.pending, (state: IInitialState) => {
         state.status = "loading";
       })
-      .addCase(fetchProducts.fulfilled, (state: IInitialState, action: any) => {
+      .addCase(fetchMembers.fulfilled, (state: IInitialState, action: any) => {
         state.status = "succeeded";
         state.items = action?.payload;
       })
-      .addCase(fetchProducts.rejected, (state: IInitialState, action: any) => {
+      .addCase(fetchMembers.rejected, (state: IInitialState, action: any) => {
         state.status = "failed";
         state.error = action?.error?.message;
       });
   },
 });
 
-export default productsSlice.reducer;
+export default membersSlice.reducer;

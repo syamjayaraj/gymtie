@@ -3,14 +3,12 @@ import { StyleSheet, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Landing from "./landing";
 import Contact from "./contact";
-import Help from "./help";
 import About from "./about";
-import Contributors from "./contributors";
 import Terms from "./terms";
 
 const Stack = createStackNavigator();
 
-function MoreComponent() {
+function SettingsComponent() {
   function OtherTitle(props: any) {
     return <Text style={styles.subTitle}>{props.name}</Text>;
   }
@@ -31,14 +29,12 @@ function MoreComponent() {
       }}
     >
       <Stack.Screen
-        name="മറ്റുള്ളവ"
+        name="Settings"
         component={Landing}
         options={{
           headerShown: true,
           gestureDirection: "horizontal",
-          headerTitle: (props: any) => (
-            <OtherTitle {...{ name: "മറ്റുള്ളവ" }} />
-          ),
+          headerTitle: (props: any) => <OtherTitle {...{ name: "Settings" }} />,
         }}
       />
 
@@ -48,20 +44,10 @@ function MoreComponent() {
         options={{
           headerShown: true,
           gestureDirection: "horizontal",
-          headerTitle: (props: any) => (
-            <OtherTitle {...{ name: "ഞങ്ങളുമായി ബന്ധപ്പെടൂ" }} />
-          ),
+          headerTitle: (props: any) => <OtherTitle {...{ name: "Contact" }} />,
         }}
       />
-      <Stack.Screen
-        name="Help"
-        component={Help}
-        options={{
-          headerShown: true,
-          gestureDirection: "horizontal",
-          headerTitle: (props: any) => <OtherTitle {...{ name: "സഹായം" }} />,
-        }}
-      />
+
       <Stack.Screen
         name="About"
         component={About}
@@ -72,15 +58,7 @@ function MoreComponent() {
           gestureDirection: "horizontal",
         }}
       />
-      <Stack.Screen
-        name="Contributors"
-        component={Contributors}
-        options={{
-          headerShown: true,
-          gestureDirection: "horizontal",
-          headerTitle: (props: any) => <OtherTitle {...{ name: "സംഭാവകർ" }} />,
-        }}
-      />
+
       <Stack.Screen
         name="Terms"
         component={Terms}
@@ -114,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MoreComponent;
+export default SettingsComponent;

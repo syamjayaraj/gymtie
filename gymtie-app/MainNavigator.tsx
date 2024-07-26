@@ -4,11 +4,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeComponent from "./tabs/home";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import SettingsComponent from "./tabs/settings";
+import MembersComponent from "./tabs/members";
+import PaymentsComponent from "./tabs/payments";
 
 const BottomTab = createBottomTabNavigator();
 
 const MainNavigator = ({ navigation }: any) => {
-  const { token, isAuthenticated } = useSelector((state: any) => state.auth);
+  const isAuthenticated = useSelector((state: any) => state.auth.token);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -44,7 +47,37 @@ const MainNavigator = ({ navigation }: any) => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name="home-outline" size={24} color={"#2b2b2b"} />
+            <Ionicons name="home" size={24} color={"#2b2b2b"} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Members"
+        children={(props) => <MembersComponent {...props} />}
+        options={{
+          tabBarLabel: "Members",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name="people" size={24} color={"#2b2b2b"} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Payments"
+        children={(props) => <PaymentsComponent {...props} />}
+        options={{
+          tabBarLabel: "Payments",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name="wallet" size={24} color={"#2b2b2b"} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsComponent}
+        options={{
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name="settings" size={24} color={"#2b2b2b"} />
           ),
         }}
       />

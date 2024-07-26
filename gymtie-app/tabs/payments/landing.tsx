@@ -1,71 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Dimensions,
-  TouchableOpacity,
-  Image,
   SafeAreaView,
   ActivityIndicator,
+  FlatList,
 } from "react-native";
 
-import { Box, Text, ScrollView, Heading } from "native-base";
-import { loadSliderHome } from "../../apiService";
-import { ISliderHome } from "../../models/model";
+import { Box, Text, ScrollView, Heading, List } from "native-base";
+import { gql, useQuery } from "@apollo/client";
+import ItemComponent from "../../components/item";
+import SearchBar from "../../components/common/search-bar";
 
-const { width } = Dimensions.get("window");
+const GET_MEMBERS = gql`
+  query {
+    members {
+      data {
+        id
+        attributes {
+          name
+          memberId
+          joiningDate
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default function Landing(props: any) {
-  const [loading, setLoading] = useState(false);
-  const [tables, setTables] = useState<any>([]);
+  const { loading, error, data } = useQuery(GET_MEMBERS);
+  const [searchText, setSearchText] = useState("");
 
-  // const loadSliderHomeFromApi = async (pageParam?: number) => {
-  //   setLoading(true);
-  //   const response = await loadSliderHome();
-  //   if (response) {
-  //     setSlider(response?.data);
-  //     setLoading(false);
-  //   }
-  // };
+  const handleSearch = (param: string) => {
+    setSearchText(param);
+  };
 
   return (
     <Box bg={"white"} pt={12}>
       <SafeAreaView>
         <ScrollView contentContainerStyle={{ width: "100%" }}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Payments</Text>
+          </View>
+          <SearchBar
+            onSearchData={handleSearch}
+            placeholder="Search Payments"
+          />
           {loading && <ActivityIndicator size="large" color="#00ff00" />}
           {!loading && (
             <View style={styles.container}>
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>This month</Text>
-              </View>
-              <View style={styles.menu}>
-                <TouchableOpacity
-                  style={styles.menuCard}
-                  onPress={() =>
-                    props.navigation.navigate("Menu", {
-                      // type: "tables",
-                    })
-                  }
-                >
-                  <Heading>1200</Heading>
-                  <Text style={styles.label}>Members</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.menuCard}
-                  onPress={() =>
-                    props.navigation.navigate("Menu", {
-                      // type: "tables",
-                    })
-                  }
-                >
-                  <Text style={styles.value}>120000.67</Text>
-                  <Text style={styles.label}>Payments</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>Lifetime</Text>
-              </View>
+              {!loading && data && (
+                <FlatList
+                  data={data?.members?.data}
+                  renderItem={({ item, index }) => (
+                    <ItemComponent item={item} index={index} />
+                  )}
+                  keyExtractor={(item) => item.id.toString()}
+                  contentContainerStyle={styles.container}
+                />
+              )}
             </View>
           )}
         </ScrollView>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     width: 400,
   },
   titleContainer: {
-    marginLeft: 0,
+    padding: 20,
   },
   title: {
     fontWeight: "bold",

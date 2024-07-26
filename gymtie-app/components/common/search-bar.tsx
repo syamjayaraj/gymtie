@@ -2,21 +2,21 @@ import { Icon, Input, VStack, View } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
-import useDebounce from "../../../utils/use-debounce";
+import useDebounce from "../../utils/use-debounce";
 
 interface customProps {
   onSearchData: (searchInput: string) => void;
-  categories: any;
+  placeholder: string;
 }
 
-export default function SearchBar({ categories, onSearchData }: customProps) {
+export default function SearchBar({ onSearchData, placeholder }: customProps) {
   const [searchInput, setSearchInput] = useState<string>("");
 
   useDebounce(
     () => {
       onSearchData(searchInput);
     },
-    [categories, searchInput],
+    [searchInput],
     800
   );
 
@@ -27,7 +27,7 @@ export default function SearchBar({ categories, onSearchData }: customProps) {
       <VStack w="100%" alignSelf="center">
         <Input
           onChangeText={handleSearch}
-          placeholder="തിരയൂ"
+          placeholder={placeholder}
           width="100%"
           borderRadius="4"
           py="3"

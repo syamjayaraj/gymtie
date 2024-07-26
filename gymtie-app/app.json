@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "YoungMenu",
-    "owner": "onnich",
-    "slug": "YoungMenu",
-    "version": "4.9.9",
+    "name": "GymTie",
+    "owner": "Floyet",
+    "slug": "GymTie",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,15 +15,15 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.youngmenu"
+      "bundleIdentifier": "com.gymtie"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 19,
-      "package": "com.youngmenu"
+      "versionCode": 1,
+      "package": "com.gymtie"
     },
     "web": {
       "favicon": "./assets/favicon.png"
